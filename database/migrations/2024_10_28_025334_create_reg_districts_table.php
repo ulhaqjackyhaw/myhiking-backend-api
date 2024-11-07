@@ -9,7 +9,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('reg_districts', function (Blueprint $table) {
-            $table->char('id', 7)->primary(); // Kode kecamatan, biasanya 7 karakter
+            $table->char('id', 6)->primary(); // Kode kecamatan, biasanya 7 karakter
             $table->char('regency_id', 4); // Kode kabupaten/kota
             $table->string('name', 100); // Nama kecamatan
             $table->timestamps();

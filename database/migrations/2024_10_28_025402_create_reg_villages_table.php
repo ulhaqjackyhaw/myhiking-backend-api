@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('reg_villages', function (Blueprint $table) {
             $table->char('id', 10)->primary(); // Kode desa/kelurahan, biasanya 10 karakter
-            $table->char('district_id', 7); // Kode kecamatan
+            $table->char('district_id', 6); // Kode kecamatan
             $table->string('name', 100); // Nama desa/kelurahan
             $table->timestamps();
 
