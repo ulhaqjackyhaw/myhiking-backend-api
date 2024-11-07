@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Validation\Rules\Unique;
 
 return new class extends Migration
 {
@@ -12,12 +13,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
+            $table->uuid('id')->primary();           // Primary Key: ID user
+            $table->string('name');                   // Nama user atau pendaki
+            $table->string('email')->unique();        // Email user
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->string('password');               // Password user
+            $table->integer('level')->check('level IN (1, 2, 3)');  // Level user (opsional)
+            $table->string('address')->nullable();    // Alamat user (opsional)
+            $table->bigInteger('nik')->unique()->nullable(); // NIK user (opsional dan unik)
+            $table->bigInteger('phone')->unique()->nullable(); // Nomor telepon user (opsional dan unik)
+            $table->bigInteger('emergency_phone')->nullable(); // Nomor telepon darurat user (opsional)
+            $table->string('profile_picture')->nullable(); // Kartu Identitas (opsional)
+            $table->date('date_of_birth')->nullable(); // Tanggal lahir user (opsional)
+            $table->rememberToken();                  // Token remember me (untuk autentikasi)
             $table->timestamps();
         });
     }
