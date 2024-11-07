@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class RegenciesTableSeeder extends Seeder
 {
@@ -12,7 +13,7 @@ class RegenciesTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $reg_regencies = [
+        $regencies = [
             array('id' => '1101','province_id' => '11','name' => 'KAB. ACEH SELATAN'),
             array('id' => '1102','province_id' => '11','name' => 'KAB. ACEH TENGGARA'),
             array('id' => '1103','province_id' => '11','name' => 'KAB. ACEH TIMUR'),
@@ -528,5 +529,9 @@ class RegenciesTableSeeder extends Seeder
             array('id' => '9507','province_id' => '95','name' => 'KAB. LANNY JAYA'),
             array('id' => '9508','province_id' => '95','name' => 'KAB. NDUGA')
         ];
+
+        foreach ($regencies as $regencie) {
+            DB::table('reg_regencies')->insert($regencie);
+        }
     }
 }

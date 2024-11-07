@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DistrictsTableSeeder extends Seeder
 {
@@ -12,7 +13,7 @@ class DistrictsTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $reg_districts = [
+        $districts = [
             array('id' => '110101','regency_id' => '1101','name' => 'Bakongan'),
             array('id' => '110102','regency_id' => '1101','name' => 'Kluet Utara'),
             array('id' => '110103','regency_id' => '1101','name' => 'Kluet Selatan'),
@@ -7291,5 +7292,9 @@ class DistrictsTableSeeder extends Seeder
             array('id' => '950831','regency_id' => '9508','name' => 'Krepkuri'),
             array('id' => '950832','regency_id' => '9508','name' => 'Pasir Putih')
         ];
+
+        foreach ($districts as $district) {
+            DB::table('reg_districts')->insert($district);
+        }
     }
 }
