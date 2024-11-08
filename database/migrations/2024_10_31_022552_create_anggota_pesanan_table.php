@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('anggota_pesanan', function (Blueprint $table) {
             $table->id(); // Menggunakan id auto-increment dengan tipe bigint
-            $table->uuid('id_user'); // Kode kecamatan
+            $table->bigInteger('id_user');
             $table->timestamps(); // Menambahkan kolom created_at dan updated_at
 
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');

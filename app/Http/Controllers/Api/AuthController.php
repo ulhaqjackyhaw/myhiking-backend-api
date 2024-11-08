@@ -17,6 +17,7 @@ class AuthController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required',
+            'level' => '1',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -31,6 +32,7 @@ class AuthController extends Controller
         $register_data->name = $request->name;
         $register_data->email = $request->email;
         $register_data->password = bcrypt($request->password);
+        // $register_data->level = $request->level;
 
         $register_data->save();
 

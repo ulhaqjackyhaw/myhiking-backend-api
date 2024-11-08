@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
-    use HasFactory;
+    use HasApiTokens, HasFactory, Notifiable;
 
     // Menentukan bahwa ID akan bertipe string (UUID) dan tidak auto-increment
     protected $keyType = 'string';
@@ -17,7 +19,7 @@ class User extends Authenticatable
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $fillable = [
         'id',
@@ -34,12 +36,23 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast to native types.
+    * The attributes that should be hidden for serialization.
+    *
+    * @var array<int, string>
+    */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * The attributes that should be cast
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'password' => 'hashed',
         'date_of_birth' => 'date',
     ];
 
@@ -50,9 +63,18 @@ class User extends Authenticatable
     {
         parent::boot();
 
-        // Menggunakan UUID saat membuat user baru
-        static::creating(function ($user) {
-            $user->id = (string) Str::uuid();
+        static::creating(function ($model) {
+            $model->id = self::generateUniqueID();
         });
     }
+
+    protected static function generateUniqueID()
+    {
+        do {
+            $id = mt_rand(1000000000, 9999999999); // Hasilkan angka 10 digit
+        } while (self::where('id', $id)->exists());
+
+        return $id;
+    }
+
 }
