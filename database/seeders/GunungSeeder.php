@@ -18,7 +18,7 @@ class GunungSeeder extends Seeder
             [
                 'nama' => 'Gunung Merbabu',
                 'deskripsi' => 'Gunung Merbabu adalah gunung berapi bertipe stratovolcano yang terletak di Jawa Tengah.',
-                'gambar' => 'http://localhost:8000/images/img_image.png', // Perbaiki kesalahan ketik
+                'gambar' => 'img_image.png', // Perbaiki kesalahan ketik
                 'ketinggian' => 3142,
                 'province_id' => 33, // Sesuaikan jika ada
                 'regency_id' => 3328, // Sesuaikan jika ada
@@ -28,7 +28,7 @@ class GunungSeeder extends Seeder
             [
                 'nama' => 'Gunung Slamet',
                 'deskripsi' => 'Gunung Slamet adalah gunung berapi tertinggi di Jawa Tengah.',
-                'gambar' => 'http://localhost:8000/images/img_image_158x314.png',
+                'gambar' => 'img_image_158x314.png',
                 'ketinggian' => 3428, // Update jika perlu
                 'province_id' => 33,
                 'regency_id' => 3328,
@@ -38,7 +38,7 @@ class GunungSeeder extends Seeder
             [
                 'nama' => 'Gunung Sumbing',
                 'deskripsi' => 'Gunung Sumbing adalah gunung berapi yang terletak di Jawa Tengah.',
-                'gambar' => 'http://localhost:8000/images/img_image_156x316.png',
+                'gambar' => 'img_image_156x316.png',
                 'ketinggian' => 3371, // Update jika perlu
                 'province_id' => 33,
                 'regency_id' => 3328,

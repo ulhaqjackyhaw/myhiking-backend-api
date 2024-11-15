@@ -4,7 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\FieldCentreController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\GunungController;
+use App\Http\Controllers\Api\GunungController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,9 +28,8 @@ Route::get('/', function () {
     ], 401);
 })->name('login');
 
-Route::get('field_centres', [FieldCentreController::class, 'index'])->middleware('auth:sanctum');
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
-Route::get('/gunung', [GunungController::class, 'index']);
-Route::get('/gunung/beranda', [GunungController::class, 'getGunungForBeranda']);
+Route::get('gunung', [GunungController::class, 'index']);
+// Route::get('/gunung/beranda', [GunungController::class, 'getGunungForBeranda']);
 
