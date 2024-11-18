@@ -11,7 +11,7 @@ class GunungController extends Controller
     {
         // $gunung = Gunung::all();
         // return response()->json($gunung);
-        $gunungList = Gunung::with('province')->get();
+        $gunungList = Gunung::with( 'province')->get();
 
         // Format response
         $result = $gunungList->map(function ($gunung) {

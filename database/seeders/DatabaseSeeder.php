@@ -17,6 +17,9 @@ class DatabaseSeeder extends Seeder
             RegenciesTableSeeder::class,
             DistrictsTableSeeder::class,
             VillagesTableSeeder::class,
+            GunungSeeder::class,
+            JalurSeeder::class,
+            GunungJalurSeeder::class
         ]);
     }
 }

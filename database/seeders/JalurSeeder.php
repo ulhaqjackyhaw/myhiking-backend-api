@@ -8,81 +8,186 @@ use App\Models\Jalur;
 
 class JalurSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
-        // Menambahkan data gunung
-        $gunung1 = Gunung::create([
+        // Mendapatkan data gunung berdasarkan ID atau kriteria lainnya
+        $gunung1 = Gunung::find(1); // Misal Gunung Merbabu
+        $gunung2 = Gunung::find(2); // Misal Gunung Slamet
+        $gunung3 = Gunung::find(3); // Misal Gunung Sumbing
+        // Menambahkan data jalur
+        $jalur1 = Jalur::create([
+            'nama' => 'Jalur Selo',
             'province_id' => '33',
             'regency_id' => '3328',
             'district_id' => '332815',
             'village_id' => '3328152007',
-            'nama' => 'Gunung Slamet',
-            'deskripsi' => 'Gunung tertinggi di Jawa Tengah',
-            'ketinggian' => 3428,
-            'gambar' => 'img_image_158x314.png',
+            'jarak' => '5',
+            'deskripsi' => 'Jalur pendakian melalui Selo',
+            'map_basecamp' => 'Basecamp Selo',
+            'biaya' => 15000,
         ]);
 
-        $gunung2 = Gunung::create([
-            'province_id' => '33',
-            'regency_id' => '3328',
-            'district_id' => '332815',
-            'village_id' => '3328152007',
-            'nama' => 'Gunung Merbabu',
-            'deskripsi' => 'Gunung Merbabu adalah gunung berapi bertipe stratovolcano yang terletak di Jawa Tengah.',
-            'ketinggian' => 3142,
-            'gambar' => 'img_image.png',
-        ]);
-
-        $gunung3 = Gunung::create([
-            'province_id' => '33',
-            'regency_id' => '3328',
-            'district_id' => '332815',
-            'village_id' => '3328152007',
-            'nama' => 'Gunung Sumbing',
-            'deskripsi' => 'Gunung Sumbing adalah gunung berapi yang terletak di Jawa Tengah.',
-            'ketinggian' => 3371,
-            'gambar' => 'img_image_156x316.png',
-        ]);
-
-        // Menambahkan jalur pendakian untuk Gunung Slamet
-        Jalur::create([
-            'id_gunung' => $gunung1->id,
-            'province_id' => '33',
-            'regency_id' => '3328',
-            'district_id' => '332815',
-            'village_id' => '3328152007',
-            'deskripsi' => 'Jalur pendakian melalui Bambangan',
-            'map_basecamp' => 'Basecamp Bambangan',
-            'biaya' => 15000
-        ]);
-
-        // Menambahkan jalur kedua
-        Jalur::create([
-            'id_gunung' => $gunung1->id,
+        $jalur2 = Jalur::create([
+            'nama' => 'Jalur Cuntel',
             'province_id' => '33',
             'regency_id' => '3328',
             'district_id' => '332815',
             'village_id' => '3328152008',
-            'deskripsi' => 'Jalur pendakian melalui Kaliwadas',
-            'map_basecamp' => 'Basecamp Kaliwadas',
-            'biaya' => 20000
+            'jarak' => '6',
+            'deskripsi' => 'Jalur pendakian melalui Cuntel',
+            'map_basecamp' => 'Basecamp Cuntel',
+            'biaya' => 20000,
         ]);
-
-        // Menambahkan jalur ketiga
-        Jalur::create([
-            'id_gunung' => $gunung1->id,
+        $jalur3 = Jalur::create([
+            'nama' => 'Jalur Suwanting',
             'province_id' => '33',
             'regency_id' => '3328',
             'district_id' => '332815',
-            'village_id' => '3328152009',
-            'deskripsi' => 'Jalur pendakian melalui Guci',
-            'map_basecamp' => 'Basecamp Guci',
-            'biaya' => 18000
+            'village_id' => '3328152007',
+            'jarak' => '5',
+            'deskripsi' => 'Jalur pendakian melalui Suwanting',
+            'map_basecamp' => 'Basecamp Suwanting',
+            'biaya' => 15000,
         ]);
+        $jalur4 = Jalur::create([
+            'nama' => 'Jalur Thekelan',
+            'province_id' => '33',
+            'regency_id' => '3328',
+            'district_id' => '332815',
+            'village_id' => '3328152007',
+            'jarak' => '5',
+            'deskripsi' => 'Jalur pendakian melalui Thekelan',
+            'map_basecamp' => 'Basecamp Thekelan',
+            'biaya' => 15000,
+        ]);
+        $jalur5 = Jalur::create([
+            'nama' => 'Jalur Wekas',
+            'province_id' => '33',
+            'regency_id' => '3328',
+            'district_id' => '332815',
+            'village_id' => '3328152007',
+            'jarak' => '4',
+            'deskripsi' => 'Jalur pendakian melalui Wekas',
+            'map_basecamp' => 'Basecamp Wekas',
+            'biaya' => 15000,
+        ]);
+        $jalur6 = Jalur::create([
+            'nama' => 'Jalur Bambangan',
+            'province_id' => '33',
+            'regency_id' => '3328',
+            'district_id' => '332815',
+            'village_id' => '3328152007',
+            'jarak' => '5',
+            'deskripsi' => 'Jalur pendakian melalui Bambangan',
+            'map_basecamp' => 'Basecamp Bambangan',
+            'biaya' => 15000,
+        ]);
+
+        $jalur7 = Jalur::create([
+            'nama' => 'Jalur Kaliwadas',
+            'province_id' => '33',
+            'regency_id' => '3328',
+            'district_id' => '332815',
+            'village_id' => '3328152008',
+            'jarak' => '6',
+            'deskripsi' => 'Jalur pendakian melalui Kaliwadas',
+            'map_basecamp' => 'Basecamp Kaliwadas',
+            'biaya' => 20000,
+        ]);
+        $jalur8 = Jalur::create([
+            'nama' => 'Jalur Guci',
+            'province_id' => '33',
+            'regency_id' => '3328',
+            'district_id' => '332815',
+            'village_id' => '3328152007',
+            'jarak' => '5',
+            'deskripsi' => 'Jalur pendakian melalui Bambangan',
+            'map_basecamp' => 'Basecamp Bambangan',
+            'biaya' => 15000,
+        ]);
+        $jalur9 = Jalur::create([
+            'nama' => 'Jalur Dipajaya',
+            'province_id' => '33',
+            'regency_id' => '3328',
+            'district_id' => '332815',
+            'village_id' => '3328152007',
+            'jarak' => '5',
+            'deskripsi' => 'Jalur pendakian melalui Bambangan',
+            'map_basecamp' => 'Basecamp Bambangan',
+            'biaya' => 15000,
+        ]);
+        $jalur10 = Jalur::create([
+            'nama' => 'Jalur Baturraden',
+            'province_id' => '33',
+            'regency_id' => '3328',
+            'district_id' => '332815',
+            'village_id' => '3328152007',
+            'jarak' => '4',
+            'deskripsi' => 'Jalur pendakian melalui Bambangan',
+            'map_basecamp' => 'Basecamp Bambangan',
+            'biaya' => 15000,
+        ]);
+        $jalur11 = Jalur::create([
+            'nama' => 'Jalur Mangli',
+            'province_id' => '33',
+            'regency_id' => '3328',
+            'district_id' => '332815',
+            'village_id' => '3328152007',
+            'jarak' => '5',
+            'deskripsi' => 'Jalur pendakian melalui Mangli',
+            'map_basecamp' => 'Basecamp Mangli',
+            'biaya' => 15000,
+        ]);
+
+        $jalur12 = Jalur::create([
+            'nama' => 'Jalur Gajah Mungkur',
+            'province_id' => '33',
+            'regency_id' => '3328',
+            'district_id' => '332815',
+            'village_id' => '3328152008',
+            'jarak' => '6',
+            'deskripsi' => 'Jalur pendakian melalui Gajah Mungkur',
+            'map_basecamp' => 'Basecamp Gajah Mungkur',
+            'biaya' => 20000,
+        ]);
+        $jalur13 = Jalur::create([
+            'nama' => 'Jalur Cepit Parakan',
+            'province_id' => '33',
+            'regency_id' => '3328',
+            'district_id' => '332815',
+            'village_id' => '3328152007',
+            'jarak' => '5',
+            'deskripsi' => 'Jalur pendakian melalui Cepit Parakan',
+            'map_basecamp' => 'Basecamp Cepit Parakan',
+            'biaya' => 15000,
+        ]);
+        $jalur14 = Jalur::create([
+            'nama' => 'Jalur Bowongso',
+            'province_id' => '33',
+            'regency_id' => '3328',
+            'district_id' => '332815',
+            'village_id' => '3328152007',
+            'jarak' => '5',
+            'deskripsi' => 'Jalur pendakian melalui Bowongso',
+            'map_basecamp' => 'Basecamp Bowongso',
+            'biaya' => 15000,
+        ]);
+        $jalur15 = Jalur::create([
+            'nama' => 'Jalur Garung',
+            'province_id' => '33',
+            'regency_id' => '3328',
+            'district_id' => '332815',
+            'village_id' => '3328152007',
+            'jarak' => '4',
+            'deskripsi' => 'Jalur pendakian melalui Garung',
+            'map_basecamp' => 'Basecamp Garung',
+            'biaya' => 15000,
+        ]);
+
+        // // Mengaitkan jalur dengan gunung menggunakan relasi pivot
+
+        // $gunung1->jalur()->attach([$jalur1->id, $jalur2->id, $jalur3->id, $jalur4->id, $jalur5->id]);
+        // $gunung2->jalur()->attach([$jalur6->id, $jalur7->id, $jalur8->id, $jalur9->id, $jalur10->id]);
+        // $gunung3->jalur()->attach([$jalur11->id, $jalur12->id, $jalur13->id, $jalur14->id, $jalur15->id]);
     }
 }

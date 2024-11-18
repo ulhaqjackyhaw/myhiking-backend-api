@@ -1,10 +1,10 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\FieldCentreController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\GunungController;
+use App\Http\Controllers\Api\JalurController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,5 +31,6 @@ Route::get('/', function () {
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 Route::get('gunung', [GunungController::class, 'index']);
+Route::get('/gunung/{id_gunung}', [JalurController::class, 'index']);
 // Route::get('/gunung/beranda', [GunungController::class, 'getGunungForBeranda']);
 

@@ -13,6 +13,7 @@ class Jalur extends Model
 
     protected $fillable = [
         'id_gunung',
+        'nama',
         'province_id',
         'regency_id',
         'district_id',
@@ -25,6 +26,23 @@ class Jalur extends Model
     // Relasi dengan model Gunung
     public function gunung()
     {
-        return $this->belongsTo(Gunung::class, 'id_gunung');
+        return $this->belongsTo(Gunung::class, 'gunung_jalur', 'jalur_id', 'id_gunung');
+    }
+    public function province()
+    {
+        return $this->belongsTo(Province::class, 'province_id');
+    }
+
+    public function regency()
+    {
+        return $this->belongsTo(Regency::class, 'regency_id');
+    }
+    public function district()
+    {
+        return $this->belongsTo(District::class, 'district_id');
+    }
+    public function village()
+    {
+        return $this->belongsTo(Village::class, 'village_id');
     }
 }

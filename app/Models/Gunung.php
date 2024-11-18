@@ -12,11 +12,12 @@ class Gunung extends Model
     protected $table = 'gunung';
 
     protected $fillable = [
+        'nama',
         'province_id',
         'regency_id',
         'district_id',
         'village_id',
-        'nama',
+        'jalur_id',
         'deskripsi',
         'ketinggian',
         'gambar'
@@ -38,5 +39,9 @@ class Gunung extends Model
     public function village()
     {
         return $this->belongsTo(Village::class, 'village_id');
+    }
+    public function jalur()
+    {
+        return $this->belongsToMany(Jalur::class, 'gunung_jalur', 'id_gunung', 'jalur_id');
     }
 }
