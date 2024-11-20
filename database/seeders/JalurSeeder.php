@@ -25,6 +25,7 @@ class JalurSeeder extends Seeder
             'deskripsi' => 'Jalur pendakian melalui Selo',
             'map_basecamp' => 'Basecamp Selo',
             'biaya' => 15000,
+            'id_gunung' => $gunung1->id,  // Mengaitkan dengan Gunung Merbabu
         ]);
 
         $jalur2 = Jalur::create([
@@ -37,6 +38,7 @@ class JalurSeeder extends Seeder
             'deskripsi' => 'Jalur pendakian melalui Cuntel',
             'map_basecamp' => 'Basecamp Cuntel',
             'biaya' => 20000,
+            'id_gunung' => $gunung1->id,  // Mengaitkan dengan Gunung Merbabu
         ]);
         $jalur3 = Jalur::create([
             'nama' => 'Jalur Suwanting',
@@ -48,6 +50,7 @@ class JalurSeeder extends Seeder
             'deskripsi' => 'Jalur pendakian melalui Suwanting',
             'map_basecamp' => 'Basecamp Suwanting',
             'biaya' => 15000,
+            'id_gunung' => $gunung1->id,  // Mengaitkan dengan Gunung Merbabu
         ]);
         $jalur4 = Jalur::create([
             'nama' => 'Jalur Thekelan',
@@ -59,6 +62,7 @@ class JalurSeeder extends Seeder
             'deskripsi' => 'Jalur pendakian melalui Thekelan',
             'map_basecamp' => 'Basecamp Thekelan',
             'biaya' => 15000,
+            'id_gunung' => $gunung1->id,  // Mengaitkan dengan Gunung Merbabu
         ]);
         $jalur5 = Jalur::create([
             'nama' => 'Jalur Wekas',
@@ -70,6 +74,7 @@ class JalurSeeder extends Seeder
             'deskripsi' => 'Jalur pendakian melalui Wekas',
             'map_basecamp' => 'Basecamp Wekas',
             'biaya' => 15000,
+            'id_gunung' => $gunung1->id,  // Mengaitkan dengan Gunung Merbabu
         ]);
         $jalur6 = Jalur::create([
             'nama' => 'Jalur Bambangan',
@@ -81,6 +86,7 @@ class JalurSeeder extends Seeder
             'deskripsi' => 'Jalur pendakian melalui Bambangan',
             'map_basecamp' => 'Basecamp Bambangan',
             'biaya' => 15000,
+            'id_gunung' => $gunung2->id,  // Mengaitkan dengan Gunung Slamet
         ]);
 
         $jalur7 = Jalur::create([
@@ -93,6 +99,7 @@ class JalurSeeder extends Seeder
             'deskripsi' => 'Jalur pendakian melalui Kaliwadas',
             'map_basecamp' => 'Basecamp Kaliwadas',
             'biaya' => 20000,
+            'id_gunung' => $gunung2->id,  // Mengaitkan dengan Gunung Slamet
         ]);
         $jalur8 = Jalur::create([
             'nama' => 'Jalur Guci',
@@ -104,6 +111,7 @@ class JalurSeeder extends Seeder
             'deskripsi' => 'Jalur pendakian melalui Bambangan',
             'map_basecamp' => 'Basecamp Bambangan',
             'biaya' => 15000,
+            'id_gunung' => $gunung2->id,  // Mengaitkan dengan Gunung Slamet
         ]);
         $jalur9 = Jalur::create([
             'nama' => 'Jalur Dipajaya',
@@ -115,6 +123,7 @@ class JalurSeeder extends Seeder
             'deskripsi' => 'Jalur pendakian melalui Bambangan',
             'map_basecamp' => 'Basecamp Bambangan',
             'biaya' => 15000,
+            'id_gunung' => $gunung2->id,  // Mengaitkan dengan Gunung Slamet
         ]);
         $jalur10 = Jalur::create([
             'nama' => 'Jalur Baturraden',
@@ -126,6 +135,7 @@ class JalurSeeder extends Seeder
             'deskripsi' => 'Jalur pendakian melalui Bambangan',
             'map_basecamp' => 'Basecamp Bambangan',
             'biaya' => 15000,
+            'id_gunung' => $gunung2->id,  // Mengaitkan dengan Gunung Slamet
         ]);
         $jalur11 = Jalur::create([
             'nama' => 'Jalur Mangli',
@@ -137,6 +147,7 @@ class JalurSeeder extends Seeder
             'deskripsi' => 'Jalur pendakian melalui Mangli',
             'map_basecamp' => 'Basecamp Mangli',
             'biaya' => 15000,
+            'id_gunung' => $gunung3->id,  // Mengaitkan dengan Gunung Sumbing
         ]);
 
         $jalur12 = Jalur::create([
@@ -149,6 +160,7 @@ class JalurSeeder extends Seeder
             'deskripsi' => 'Jalur pendakian melalui Gajah Mungkur',
             'map_basecamp' => 'Basecamp Gajah Mungkur',
             'biaya' => 20000,
+            'id_gunung' => $gunung3->id,  // Mengaitkan dengan Gunung Sumbing
         ]);
         $jalur13 = Jalur::create([
             'nama' => 'Jalur Cepit Parakan',
@@ -160,6 +172,7 @@ class JalurSeeder extends Seeder
             'deskripsi' => 'Jalur pendakian melalui Cepit Parakan',
             'map_basecamp' => 'Basecamp Cepit Parakan',
             'biaya' => 15000,
+            'id_gunung' => $gunung3->id,  // Mengaitkan dengan Gunung Sumbing
         ]);
         $jalur14 = Jalur::create([
             'nama' => 'Jalur Bowongso',
@@ -171,6 +184,7 @@ class JalurSeeder extends Seeder
             'deskripsi' => 'Jalur pendakian melalui Bowongso',
             'map_basecamp' => 'Basecamp Bowongso',
             'biaya' => 15000,
+            'id_gunung' => $gunung3->id,  // Mengaitkan dengan Gunung Sumbing
         ]);
         $jalur15 = Jalur::create([
             'nama' => 'Jalur Garung',
@@ -182,6 +196,7 @@ class JalurSeeder extends Seeder
             'deskripsi' => 'Jalur pendakian melalui Garung',
             'map_basecamp' => 'Basecamp Garung',
             'biaya' => 15000,
+            'id_gunung' => $gunung3->id,  // Mengaitkan dengan Gunung Sumbing
         ]);
 
         // // Mengaitkan jalur dengan gunung menggunakan relasi pivot

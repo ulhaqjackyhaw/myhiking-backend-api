@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,31 +16,38 @@ class Gunung extends Model
         'regency_id',
         'district_id',
         'village_id',
-        'jalur_id',
         'deskripsi',
         'ketinggian',
-        'gambar'
+        'gambar',
     ];
+
+    // Relasi many-to-many dengan Jalur melalui tabel pivot gunung_jalur
+    public function jalur()
+    {
+        return $this->hasMany(Jalur::class, 'id_gunung', 'id')->distinct(); // Tambahkan distinct untuk menghindari duplikasi
+    }
 
     public function province()
     {
-        return $this->belongsTo(Province::class, 'province_id');
+        return $this->belongsTo(Province::class, 'province_id', 'id');
     }
 
+
+    // Relasi ke model Regency
     public function regency()
     {
         return $this->belongsTo(Regency::class, 'regency_id');
     }
+
+    // Relasi ke model District
     public function district()
     {
         return $this->belongsTo(District::class, 'district_id');
     }
+
+    // Relasi ke model Village
     public function village()
     {
         return $this->belongsTo(Village::class, 'village_id');
-    }
-    public function jalur()
-    {
-        return $this->belongsToMany(Jalur::class, 'gunung_jalur', 'id_gunung', 'jalur_id');
     }
 }

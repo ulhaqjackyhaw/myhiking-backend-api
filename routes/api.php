@@ -32,5 +32,6 @@ Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 Route::get('gunung', [GunungController::class, 'index']);
 Route::get('/gunung/{id_gunung}', [JalurController::class, 'index']);
+Route::get('/gunung/{id_gunung}/jalur/{id_jalur}', [JalurController::class, 'jalur']);
 // Route::get('/gunung/beranda', [GunungController::class, 'getGunungForBeranda']);
 

@@ -26,7 +26,7 @@ class Jalur extends Model
     // Relasi dengan model Gunung
     public function gunung()
     {
-        return $this->belongsTo(Gunung::class, 'gunung_jalur', 'jalur_id', 'id_gunung');
+        return $this->belongsTo(Gunung::class, 'id_gunung', 'id');
     }
     public function province()
     {
