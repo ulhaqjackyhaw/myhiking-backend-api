@@ -16,7 +16,7 @@ class GunungController extends Controller
         // Format response
         $result = $gunungList->map(function ($gunung) {
             // Menggabungkan URL dasar dengan nama gambar, asumsikan gambar disimpan dalam folder 'images'
-            $imageUrl = url('storage/images/' . $gunung->gambar); // Sesuaikan dengan tempat penyimpanan gambar Anda
+            $imageUrl = url('/images' . $gunung->gambar); // Sesuaikan dengan tempat penyimpanan gambar Anda
 
             return [
                 'id' => $gunung->id,
