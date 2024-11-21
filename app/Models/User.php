@@ -77,4 +77,15 @@ class User extends Authenticatable
         return $id;
     }
 
+     // Relasi ke tabel `pesanan` (user sebagai pemesan utama)
+    public function pesanan()
+    {
+        return $this->hasMany(Pesanan::class, 'user_id');
+    }
+
+    // Relasi ke tabel `anggota_pesanan` (user sebagai anggota pemesanan)
+    public function anggotaPesanan()
+    {
+        return $this->belongsToMany(Pesanan::class, 'anggota_pesanan', 'user_id', 'pesanan_id');
+    }
 }

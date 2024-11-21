@@ -45,4 +45,9 @@ class Jalur extends Model
     {
         return $this->belongsTo(Village::class, 'village_id');
     }
+
+    public function pesanan()
+    {
+        return $this->hasOne(Pesanan::class, 'user_id');
+    }
 }

@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\GunungController;
 use App\Http\Controllers\Api\JalurController;
+use App\Http\Controllers\Api\PesananController;
+use App\Http\Controllers\Api\AnggotaPesananController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,4 +36,18 @@ Route::get('gunung', [GunungController::class, 'index']);
 Route::get('/gunung/{id_gunung}', [JalurController::class, 'index']);
 Route::get('/gunung/{id_gunung}/jalur/{id_jalur}', [JalurController::class, 'jalur']);
 // Route::get('/gunung/beranda', [GunungController::class, 'getGunungForBeranda']);
+// Route::resource('pesanan', PesananController::class);
+Route::get('pesanan', [PesananController::class, 'index']);
 
+Route::prefix('pesanan')->group(function () {
+    Route::post('/', [PesananController::class, 'buatPesanan']); // Membuat pesanan baru
+    Route::post('{pesananId}/tambah-anggota', [PesananController::class, 'tambahAnggota']); // Menambahkan anggota ke pesanan
+    Route::get('{pesananId}', [PesananController::class, 'lihatPesanan']); // Melihat detail pesanan
+});
+
+
+Route::prefix('anggota-pesanan')->group(function () {
+    Route::post('{pesananId}/tambah', [AnggotaPesananController::class, 'tambahAnggota']); // Menambahkan anggota
+    Route::delete('{pesananId}/hapus/{userId}', [AnggotaPesananController::class, 'hapusAnggota']); // Menghapus anggota
+    Route::get('{pesananId}', [AnggotaPesananController::class, 'daftarAnggota']); // Melihat daftar anggota
+});

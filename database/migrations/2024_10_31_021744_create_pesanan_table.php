@@ -12,12 +12,15 @@ return new class extends Migration
             $table->id(); // Kolom ID utama dengan auto-increment
             $table->foreignId('id_gunung')->constrained('gunung'); // Foreign key ke tabel gunung
             $table->foreignId('id_jalur')->constrained('jalur');   // Foreign key ke tabel jalur
-            $table->foreignId('id_anggota_pesanan')->constrained('anggota_pesanan'); // Foreign key ke tabel anggota_pesanan
+            $table->bigInteger('id_user')->constrained('users')->onDelete('cascade'); // Pemesan utama
             $table->date('tanggal_naik'); // Kolom tanggal naik
             $table->date('tanggal_turun'); // Kolom tanggal turun
             $table->double('total_harga_tiket'); // Kolom total harga tiket
             $table->enum('status', ['Booking', 'Sedang Mendaki', 'Selesai'])->default('Booking'); // Kolom status dengan pilihan enum
             $table->timestamps(); // Kolom created_at dan updated_at
+
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
+
         });
     }
 
