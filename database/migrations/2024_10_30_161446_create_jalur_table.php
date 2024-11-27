@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->integer('jarak');
             $table->text('deskripsi');
             $table->string('map_basecamp', 60);
+            $table->string('gambar_jalur')->nullable();
             $table->integer('biaya');
             $table->timestamps();
 
