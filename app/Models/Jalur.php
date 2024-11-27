@@ -22,7 +22,9 @@ class Jalur extends Model
         'map_basecamp',
         'biaya'
     ];
-
+    protected $casts = [
+        'gambar' => 'array',
+    ];
     // Relasi dengan model Gunung
     public function gunung()
     {

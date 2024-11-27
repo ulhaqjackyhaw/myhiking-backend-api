@@ -24,6 +24,7 @@ class JalurSeeder extends Seeder
             'jarak' => '5',
             'deskripsi' => 'Jalur pendakian melalui Selo',
             'map_basecamp' => 'Basecamp Selo',
+            'gambar_jalur' => 'img_image_merbabu_jalur.jpg',
             'biaya' => 15000,
             'id_gunung' => $gunung1->id,  // Mengaitkan dengan Gunung Merbabu
         ]);
@@ -37,6 +38,7 @@ class JalurSeeder extends Seeder
             'jarak' => '6',
             'deskripsi' => 'Jalur pendakian melalui Cuntel',
             'map_basecamp' => 'Basecamp Cuntel',
+            'gambar_jalur' => 'img_image_merbabu_jalur.jpg',
             'biaya' => 20000,
             'id_gunung' => $gunung1->id,  // Mengaitkan dengan Gunung Merbabu
         ]);
@@ -49,6 +51,7 @@ class JalurSeeder extends Seeder
             'jarak' => '5',
             'deskripsi' => 'Jalur pendakian melalui Suwanting',
             'map_basecamp' => 'Basecamp Suwanting',
+            'gambar_jalur' => 'img_image_merbabu_jalur.jpg',
             'biaya' => 15000,
             'id_gunung' => $gunung1->id,  // Mengaitkan dengan Gunung Merbabu
         ]);
@@ -61,6 +64,7 @@ class JalurSeeder extends Seeder
             'jarak' => '5',
             'deskripsi' => 'Jalur pendakian melalui Thekelan',
             'map_basecamp' => 'Basecamp Thekelan',
+            'gambar_jalur' => 'img_image_merbabu_jalur.jpg',
             'biaya' => 15000,
             'id_gunung' => $gunung1->id,  // Mengaitkan dengan Gunung Merbabu
         ]);
@@ -73,6 +77,7 @@ class JalurSeeder extends Seeder
             'jarak' => '4',
             'deskripsi' => 'Jalur pendakian melalui Wekas',
             'map_basecamp' => 'Basecamp Wekas',
+            'gambar_jalur' => 'img_image_merbabu_jalur.jpg',
             'biaya' => 15000,
             'id_gunung' => $gunung1->id,  // Mengaitkan dengan Gunung Merbabu
         ]);
@@ -85,6 +90,7 @@ class JalurSeeder extends Seeder
             'jarak' => '5',
             'deskripsi' => 'Jalur pendakian melalui Bambangan',
             'map_basecamp' => 'Basecamp Bambangan',
+            'gambar_jalur' => 'img_image_slamet_jalur.png',
             'biaya' => 15000,
             'id_gunung' => $gunung2->id,  // Mengaitkan dengan Gunung Slamet
         ]);
@@ -98,6 +104,7 @@ class JalurSeeder extends Seeder
             'jarak' => '6',
             'deskripsi' => 'Jalur pendakian melalui Kaliwadas',
             'map_basecamp' => 'Basecamp Kaliwadas',
+            'gambar_jalur' => 'img_image_slamet_jalur.png',
             'biaya' => 20000,
             'id_gunung' => $gunung2->id,  // Mengaitkan dengan Gunung Slamet
         ]);
@@ -110,6 +117,7 @@ class JalurSeeder extends Seeder
             'jarak' => '5',
             'deskripsi' => 'Jalur pendakian melalui Bambangan',
             'map_basecamp' => 'Basecamp Bambangan',
+            'gambar_jalur' => 'img_image_slamet_jalur.png',
             'biaya' => 15000,
             'id_gunung' => $gunung2->id,  // Mengaitkan dengan Gunung Slamet
         ]);
@@ -122,6 +130,7 @@ class JalurSeeder extends Seeder
             'jarak' => '5',
             'deskripsi' => 'Jalur pendakian melalui Bambangan',
             'map_basecamp' => 'Basecamp Bambangan',
+            'gambar_jalur' => 'img_image_slamet_jalur.png',
             'biaya' => 15000,
             'id_gunung' => $gunung2->id,  // Mengaitkan dengan Gunung Slamet
         ]);
@@ -134,6 +143,7 @@ class JalurSeeder extends Seeder
             'jarak' => '4',
             'deskripsi' => 'Jalur pendakian melalui Bambangan',
             'map_basecamp' => 'Basecamp Bambangan',
+            'gambar_jalur' => 'img_image_slamet_jalur.png',
             'biaya' => 15000,
             'id_gunung' => $gunung2->id,  // Mengaitkan dengan Gunung Slamet
         ]);
@@ -146,6 +156,7 @@ class JalurSeeder extends Seeder
             'jarak' => '5',
             'deskripsi' => 'Jalur pendakian melalui Mangli',
             'map_basecamp' => 'Basecamp Mangli',
+            'gambar_jalur' => 'img_image_sumbing_jalur.jpg',
             'biaya' => 15000,
             'id_gunung' => $gunung3->id,  // Mengaitkan dengan Gunung Sumbing
         ]);
@@ -159,6 +170,7 @@ class JalurSeeder extends Seeder
             'jarak' => '6',
             'deskripsi' => 'Jalur pendakian melalui Gajah Mungkur',
             'map_basecamp' => 'Basecamp Gajah Mungkur',
+            'gambar_jalur' => 'img_image_sumbing_jalur.jpg',
             'biaya' => 20000,
             'id_gunung' => $gunung3->id,  // Mengaitkan dengan Gunung Sumbing
         ]);
@@ -171,6 +183,7 @@ class JalurSeeder extends Seeder
             'jarak' => '5',
             'deskripsi' => 'Jalur pendakian melalui Cepit Parakan',
             'map_basecamp' => 'Basecamp Cepit Parakan',
+            'gambar_jalur' => 'img_image_sumbing_jalur.jpg',
             'biaya' => 15000,
             'id_gunung' => $gunung3->id,  // Mengaitkan dengan Gunung Sumbing
         ]);
@@ -183,6 +196,7 @@ class JalurSeeder extends Seeder
             'jarak' => '5',
             'deskripsi' => 'Jalur pendakian melalui Bowongso',
             'map_basecamp' => 'Basecamp Bowongso',
+            'gambar_jalur' => 'img_image_sumbing_jalur.jpg',
             'biaya' => 15000,
             'id_gunung' => $gunung3->id,  // Mengaitkan dengan Gunung Sumbing
         ]);
@@ -195,6 +209,7 @@ class JalurSeeder extends Seeder
             'jarak' => '4',
             'deskripsi' => 'Jalur pendakian melalui Garung',
             'map_basecamp' => 'Basecamp Garung',
+            'gambar_jalur' => 'img_image_sumbing_jalur.jpg',
             'biaya' => 15000,
             'id_gunung' => $gunung3->id,  // Mengaitkan dengan Gunung Sumbing
         ]);
