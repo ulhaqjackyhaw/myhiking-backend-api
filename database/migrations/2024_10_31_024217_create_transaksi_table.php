@@ -10,14 +10,15 @@ return new class extends Migration
     {
         Schema::create('transaksi', function (Blueprint $table) {
             $table->id(); // Kolom ID utama dengan auto-increment
-            $table->foreignId('id_pesanan')->constrained('pesanan'); // Foreign key ke tabel pesanan
+            $table->bigInteger('id_pesanan')->constrained('pesanan')->onDelete('cascade');
             $table->string('metode_pembayaran', 60);
             $table->integer('total_bayar');
-            $table->integer('dp');
-            $table->enum('status_bayar', ['Lunas', 'Belum Lunas'])->default('Belum Lunas'); // Kolom status dengan pilihan enum
+            $table->enum('status_pesanan', ['Verified', 'unverified'])->default('Unverified'); // Kolom status dengan pilihan enum
             $table->date('waktu_pembayaran');
             $table->string('bukti');
             $table->timestamps(); // Kolom created_at dan updated_at
+
+            $table->foreign('id_pesanan')->references('id')->on('pesanan')->onDelete('cascade');
         });
     }
 

@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             VillagesTableSeeder::class,
             GunungSeeder::class,
             JalurSeeder::class,
-            // GunungJalurSeeder::class
+            GunungJalurSeeder::class
         ]);
     }
 }

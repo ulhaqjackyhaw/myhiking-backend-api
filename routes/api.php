@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\GunungController;
 use App\Http\Controllers\Api\JalurController;
 use App\Http\Controllers\Api\PesananController;
 use App\Http\Controllers\Api\AnggotaPesananController;
+use App\Http\Controllers\Api\TransaksiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,3 +52,6 @@ Route::prefix('anggota-pesanan')->group(function () {
     Route::delete('{pesananId}/hapus/{userId}', [AnggotaPesananController::class, 'hapusAnggota']); // Menghapus anggota
     Route::get('{pesananId}', [AnggotaPesananController::class, 'daftarAnggota']); // Melihat daftar anggota
 });
+
+Route::get('transaksi', [TransaksiController::class, 'index']);
+Route::post('transaksi', [TransaksiController::class, 'create']);

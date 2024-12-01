@@ -9,7 +9,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('pesanan', function (Blueprint $table) {
-            $table->id(); // Kolom ID utama dengan auto-increment
+            $table->bigInteger('id')->primary();           // Primary Key: ID pesanan
             $table->foreignId('id_gunung')->constrained('gunung'); // Foreign key ke tabel gunung
             $table->foreignId('id_jalur')->constrained('jalur');   // Foreign key ke tabel jalur
             $table->bigInteger('id_user')->constrained('users')->onDelete('cascade'); // Pemesan utama

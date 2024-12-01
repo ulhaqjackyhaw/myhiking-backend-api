@@ -9,6 +9,10 @@ class Pesanan extends Model
 {
     use HasFactory;
 
+    // Menentukan bahwa ID akan bertipe string (UUID) dan tidak auto-increment
+    protected $keyType = 'string';
+    public $incrementing = false;
+
     protected $table = 'pesanan';
 
     protected $fillable = [
@@ -20,6 +24,24 @@ class Pesanan extends Model
         'total_harga_tiket',
         'status',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->id = self::generateUniqueID();
+        });
+    }
+
+    protected static function generateUniqueID()
+    {
+        do {
+            $id = mt_rand(1000000000, 9999999999); // Hasilkan angka 10 digit
+        } while (self::where('id', $id)->exists());
+
+        return $id;
+    }
 
     public function gunung()
     {
@@ -41,5 +63,11 @@ class Pesanan extends Model
     public function anggota()
     {
         return $this->belongsToMany(User::class, 'anggota_pesanan', 'id_pesanan', 'id_user');
+    }
+
+    // Relasi ke model transaksi
+    public function transaksi()
+    {
+        return $this->hasOne(Transaksi::class, 'id_pesanan');
     }
 }
