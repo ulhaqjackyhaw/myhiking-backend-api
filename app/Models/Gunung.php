@@ -18,8 +18,13 @@ class Gunung extends Model
         'village_id',
         'deskripsi',
         'ketinggian',
-        'gambar',
+        // 'gambar',
     ];
+
+    protected $casts = [
+        'gambar' => 'array',
+    ];
+
 
     // Relasi many-to-many dengan Jalur melalui tabel pivot gunung_jalur
     public function jalur()

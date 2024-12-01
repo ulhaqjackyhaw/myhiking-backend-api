@@ -18,7 +18,8 @@ return new class extends Migration {
             $table->string('nama');
             $table->text('deskripsi');
             $table->integer('ketinggian')->default(0);
-            $table->string('gambar');
+            // $table->string('gambar');
+            $table->string('gambar_gunung')->nullable();
             $table->timestamps();
 
             // Definisi foreign key
