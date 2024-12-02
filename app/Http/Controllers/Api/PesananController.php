@@ -12,25 +12,67 @@ class PesananController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // public function index()
+    // {
+    //     try{
+    //         $pesanan = Pesanan::all();
+
+    //         return response()->json([
+    //             'success' => true,
+    //             'message' => 'Successfully get data on pesanan',
+    //             'data' => $pesanan,
+    //         ], 200);
+    //     }catch (\Exception $e) {
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'Failed to get data on pesanan',
+    //             'data' => $e->getMessage(),
+    //         ], 500);
+    //     }
+
+    // }
+
     public function index()
     {
-        try{
-            $pesanan = Pesanan::all();
+        // Mengambil semua data transaksi dari database
+        $pesanan = Pesanan::with("gunung", "jalur", "pemesan")
+        ->select(
+            "id",
+            "id_gunung",
+            "id_jalur",
+            "id_user",
+            "tanggal_naik",
+            "tanggal_turun",
+            "total_harga_tiket",
+            // "created_at AS senintwentyseve",
+            "status"
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Successfully get data on pesanan',
-                'data' => $pesanan,
-            ], 200);
-        }catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to get data on pesanan',
-                'data' => $e->getMessage(),
-            ], 500);
-        }
+        )->get()->map(function ($item) {
+            // $status = 'Booking';
+            // if ($item->status == 'Lunas') {
+            //     $status = 'Selesai';
+            // }
 
+            return [
+                "id" => (string) $item->id,
+                "id_gunung" => $item->id_gunung,
+                "id_jalur" => $item->id_jalur,
+                "id_user" => $item->id_user,
+                "tanggal_naik" => $item->tanggal_naik,
+                "tanggal_turun" => $item->tanggal_turun,
+                "total_harga_tiket" => $item->total_harga_tiket,
+                "status" => $item->status,
+                "gunung" => $item->gunung->nama,
+                "jalur" => $item->jalur->nama,
+                "user" => $item->pemesan->name,
+                // "senintwentyseve" => $item->senintwentyseve,
+            ];
+        });
+
+        // Mengembalikan response dalam format JSON
+        return response()->json($pesanan);
     }
+
 
     // Membuat pesanan baru dan menambahkan anggota
     public function buatPesanan(Request $request)
@@ -106,7 +148,7 @@ class PesananController extends Controller
     public function lihatPesanan($pesananId)
     {
         try {
-            $pesanan = Pesanan::with('anggota')->findOrFail($pesananId);
+            $pesanan = Pesanan::with('gunung:id,nama', 'jalur:id,nama', 'pemesan:id,name', 'anggota')->findOrFail($pesananId);
 
             return response()->json([
                 'pesanan' => $pesanan,

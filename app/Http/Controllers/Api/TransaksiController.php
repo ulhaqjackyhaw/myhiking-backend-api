@@ -10,27 +10,63 @@ use Illuminate\Support\Facades\Storage;
 
 class TransaksiController extends Controller
 {
+    // public function index()
+    // {
+    //     try{
+    //         $transaksi = Transaksi::all();
+
+    //         return response()->json([
+    //             'success' => true,
+    //             'message' => 'Successfully get data on transaksi',
+    //             'data' => $transaksi,
+    //         ], 200);
+    //     }catch (\Exception $e) {
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'Failed to get data on transaksi',
+    //             'data' => $e->getMessage(),
+    //         ], 500);
+    //     }
+
+    // }
+
+
     public function index()
     {
-        try{
-            $transaksi = Transaksi::all();
+        // Mengambil semua data transaksi dari database
+        $transaksi = Transaksi::with("pesanan.gunung")
+        ->select(
+            "id",
+            "id_pesanan",
+            "metode_pembayaran",
+            "total_bayar",
+            "created_at AS senintwentyseve",
+            "status_pesanan AS status"
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Successfully get data on transaksi',
-                'data' => $transaksi,
-            ], 200);
-        }catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to get data on transaksi',
-                'data' => $e->getMessage(),
-            ], 500);
+            )->get()->map(function ($item) {
+                $status = 'Proses';
+                if ($item->status == 'Lunas') {
+                    $status = 'Selesai';
+                }
+
+                return [
+                    "id" => (string) $item->id,
+                    "id_pesanan" => $item->id_pesanan,
+                    "metode_pembayaran" => $item->metode_pembayaran,
+                    "total_bayar" => $item->total_bayar,
+                    "senintwentyseve" => $item->senintwentyseve,
+                    "status" => $status,
+                    "gunungslamet" => $item->pesanan->gunung->nama
+                ];
+            });
+
+            // Mengembalikan response dalam format JSON
+            return response()->json($transaksi);
         }
 
-    }
+//===================== yang fungsi index masih belum lengkap =========================//
 
-    public function create(Request $request)
+        public function create(Request $request)
     {
         // Validasi data input
         $validator = Validator::make($request->all(), [
