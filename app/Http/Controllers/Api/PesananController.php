@@ -29,48 +29,46 @@ class PesananController extends Controller
     //             'data' => $e->getMessage(),
     //         ], 500);
     //     }
-
     // }
 
     public function index()
     {
-        // Mengambil semua data transaksi dari database
-        $pesanan = Pesanan::with("gunung", "jalur", "pemesan")
-        ->select(
-            "id",
-            "id_gunung",
-            "id_jalur",
-            "id_user",
-            "tanggal_naik",
-            "tanggal_turun",
-            "total_harga_tiket",
-            // "created_at AS senintwentyseve",
-            "status"
+        try{
+            // Mengambil semua data transaksi dari database
+            $pesanan = Pesanan::with("gunung", "jalur", "pemesan")->get()->map(function ($item) {
+                // $status = 'Booking';
+                // if ($item->status == 'Lunas') {
+                //     $status = 'Selesai';
+                // }
 
-        )->get()->map(function ($item) {
-            // $status = 'Booking';
-            // if ($item->status == 'Lunas') {
-            //     $status = 'Selesai';
-            // }
+                return [
+                    "id" => (string) $item->id,
+                    "id_gunung" => $item->id_gunung,
+                    "id_jalur" => $item->id_jalur,
+                    "id_user" => $item->id_user,
+                    "tanggal_naik" => $item->tanggal_naik,
+                    "tanggal_turun" => $item->tanggal_turun,
+                    "total_harga_tiket" => $item->total_harga_tiket,
+                    "status" => $item->status,
+                    "gunung" => $item->gunung->nama,
+                    "jalur" => $item->jalur->nama,
+                    "user" => $item->pemesan->name,
+                ];
+            });
 
-            return [
-                "id" => (string) $item->id,
-                "id_gunung" => $item->id_gunung,
-                "id_jalur" => $item->id_jalur,
-                "id_user" => $item->id_user,
-                "tanggal_naik" => $item->tanggal_naik,
-                "tanggal_turun" => $item->tanggal_turun,
-                "total_harga_tiket" => $item->total_harga_tiket,
-                "status" => $item->status,
-                "gunung" => $item->gunung->nama,
-                "jalur" => $item->jalur->nama,
-                "user" => $item->pemesan->name,
-                // "senintwentyseve" => $item->senintwentyseve,
-            ];
-        });
-
-        // Mengembalikan response dalam format JSON
-        return response()->json($pesanan);
+            // Mengembalikan response dalam format JSON
+            return response()->json([
+                'success' => true,
+                'message' => 'Successfully get data on pesanan',
+                'data' => $pesanan,
+            ], 200);
+        }catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to get data on pesanan',
+                'data' => $e->getMessage(),
+            ], 500);
+        }
     }
 
 

@@ -33,38 +33,41 @@ class TransaksiController extends Controller
 
     public function index()
     {
-        // Mengambil semua data transaksi dari database
-        $transaksi = Transaksi::with("pesanan.gunung")
-        ->select(
-            "id",
-            "id_pesanan",
-            "metode_pembayaran",
-            "total_bayar",
-            "created_at AS senintwentyseve",
-            "status_pesanan AS status"
-
-            )->get()->map(function ($item) {
-                $status = 'Proses';
-                if ($item->status == 'Lunas') {
-                    $status = 'Selesai';
-                }
+        try{
+            // Mengambil semua data transaksi dari database
+            $transaksi = Transaksi::with("pesanan.gunung", "pesanan.jalur")->get()->map(function ($item) {
+            // $status = 'Unverified';
+            // if ($item->status == 'Verivied') {
+            //     $status = 'Verified';
+            // }
 
                 return [
                     "id" => (string) $item->id,
                     "id_pesanan" => $item->id_pesanan,
                     "metode_pembayaran" => $item->metode_pembayaran,
                     "total_bayar" => $item->total_bayar,
-                    "senintwentyseve" => $item->senintwentyseve,
-                    "status" => $status,
-                    "gunungslamet" => $item->pesanan->gunung->nama
+                    "status" => $item->status_pesanan,
+                    "waktu_pembayaran" => $item->waktu_pembayaran,
+                    "bukti" => $item->bukti,
+                    "gunung" => $item->pesanan->gunung->nama,
+                    "jalur" => $item->pesanan->jalur->nama
                 ];
             });
 
             // Mengembalikan response dalam format JSON
-            return response()->json($transaksi);
+            return response()->json([
+                'success' => true,
+                'message' => 'Successfully get data on transaksi',
+                'data' => $transaksi,
+            ], 200);
+        }catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to get data on transaksi',
+                'data' => $e->getMessage(),
+            ], 500);
         }
-
-//===================== yang fungsi index masih belum lengkap =========================//
+    }
 
         public function create(Request $request)
     {
@@ -75,7 +78,8 @@ class TransaksiController extends Controller
             'total_bayar' => 'required|integer|min:0',
             'status_pesanan' => 'required|in:Verified,Unverified',
             'waktu_pembayaran' => 'required|date',
-            'bukti' => 'required|image|mimes:jpeg,png,jpg|max:2048', // Maksimal ukuran 2 MB
+            // 'bukti' => 'required|image|mimes:jpeg,png,jpg|max:2048', // Maksimal ukuran 2 MB
+            'bukti' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Maksimal ukuran 2 MB
         ]);
 
         // Jika validasi gagal
