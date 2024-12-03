@@ -44,20 +44,27 @@ class AnggotaPesananController extends Controller
         try {
             $pesanan = Pesanan::findOrFail($pesananId);
 
-            // Hapus anggota
+            // Memastikan pesanan tidak dalam status selesai
+            if ($pesanan->status == 'Selesai') {
+                return response()->json([
+                    'message' => 'Anggota tidak dapat dihapus karena pesanan telah selesai.',
+                ], 400);
+            }
+
+            // Hapus anggota dari pesanan
             $pesanan->anggota()->detach($userId);
 
             return response()->json([
                 'message' => 'Anggota berhasil dihapus.',
-                'anggota' => $pesanan->anggota,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Terjadi kesalahan.',
+                'message' => 'Terjadi kesalahan saat menghapus anggota.',
                 'error' => $e->getMessage(),
             ], 500);
         }
     }
+
 
     // Melihat daftar anggota pesanan
     public function daftarAnggota($pesananId)

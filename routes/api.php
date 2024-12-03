@@ -37,6 +37,7 @@ Route::post('login', [AuthController::class, 'login']);
 Route::get('gunung', [GunungController::class, 'index']);
 Route::get('/gunung/{id_gunung}', [JalurController::class, 'index']);
 Route::get('/gunung/{id_gunung}/jalur/{id_jalur}', [DetailJalurGunungController::class, 'index']);
+Route::get('/gunung/{id_gunung}/jalur/{id_jalur}/jalurbooking', [DetailJalurGunungController::class, 'JalurBooking']);
 // Route::get('/gunung/beranda', [GunungController::class, 'getGunungForBeranda']);
 // Route::resource('pesanan', PesananController::class);
 Route::get('pesanan', [PesananController::class, 'index']);
