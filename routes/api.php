@@ -40,10 +40,10 @@ Route::get('/gunung/{id_gunung}/jalur/{id_jalur}', [DetailJalurGunungController:
 Route::get('/gunung/{id_gunung}/jalur/{id_jalur}/jalurbooking', [DetailJalurGunungController::class, 'JalurBooking']);
 // Route::get('/gunung/beranda', [GunungController::class, 'getGunungForBeranda']);
 // Route::resource('pesanan', PesananController::class);
-Route::get('pesanan', [PesananController::class, 'index']);
+Route::get('/pesanan', [PesananController::class, 'index']);
 
 Route::prefix('pesanan')->group(function () {
-    Route::post('/', [PesananController::class, 'buatPesanan']); // Membuat pesanan baru
+    Route::post('/buatpesanan', [PesananController::class, 'buatPesanan']);
     Route::post('{pesananId}/tambah-anggota', [PesananController::class, 'tambahAnggota']); // Menambahkan anggota ke pesanan
     Route::get('{pesananId}', [PesananController::class, 'lihatPesanan']); // Melihat detail pesanan
 });

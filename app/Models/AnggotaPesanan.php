@@ -18,7 +18,7 @@ class AnggotaPesanan extends Model
 
     public function user()
     {
-        return $this->belongsToMany(User::class, 'id_user');
+        return $this->belongsToMany(User::class, 'anggota_pesanan', 'id_pesanan', 'id_user');
     }
 
     public function pesanan()

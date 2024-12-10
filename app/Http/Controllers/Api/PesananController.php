@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-
+use Illuminate\Support\Facades\Log;
 use App\Models\Pesanan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -33,7 +33,7 @@ class PesananController extends Controller
 
     public function index()
     {
-        try{
+        try {
             // Mengambil semua data transaksi dari database
             $pesanan = Pesanan::with("gunung", "jalur", "pemesan")->get()->map(function ($item) {
                 // $status = 'Booking';
@@ -62,7 +62,7 @@ class PesananController extends Controller
                 'message' => 'Successfully get data on pesanan',
                 'data' => $pesanan,
             ], 200);
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to get data on pesanan',
@@ -75,6 +75,7 @@ class PesananController extends Controller
     // Membuat pesanan baru dan menambahkan anggota
     public function buatPesanan(Request $request)
     {
+        Log::info('Permintaan diterima:', $request->all());
         $request->validate([
             'id_gunung' => 'required|exists:gunung,id',
             'id_jalur' => 'required|exists:jalur,id',
@@ -104,7 +105,7 @@ class PesananController extends Controller
 
             return response()->json([
                 'message' => 'Pesanan berhasil dibuat!',
-                'pesanan' => $pesanan,
+                'pesanan' => $pesanan->load('anggota'),
                 // 'anggota' => $pesanan->anggota,
             ], 201);
         } catch (\Exception $e) {
