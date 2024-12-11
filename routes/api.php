@@ -43,7 +43,7 @@ Route::get('/gunung/{id_gunung}/jalur/{id_jalur}/jalurbooking', [DetailJalurGunu
 Route::get('/pesanan', [PesananController::class, 'index']);
 
 Route::prefix('pesanan')->group(function () {
-    Route::post('/buatpesanan', [PesananController::class, 'buatPesanan']);
+    Route::post('/', [PesananController::class, 'buatPesanan']);
     Route::post('{pesananId}/tambah-anggota', [PesananController::class, 'tambahAnggota']); // Menambahkan anggota ke pesanan
     Route::get('{pesananId}', [PesananController::class, 'lihatPesanan']); // Melihat detail pesanan
 });
