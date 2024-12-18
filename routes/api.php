@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\JalurController;
 use App\Http\Controllers\Api\PesananController;
 use App\Http\Controllers\Api\AnggotaPesananController;
 use App\Http\Controllers\Api\TransaksiController;
+use App\Models\Pesanan;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +47,8 @@ Route::prefix('pesanan')->group(function () {
     Route::post('/', [PesananController::class, 'buatPesanan']);
     Route::post('{pesananId}/tambah-anggota', [PesananController::class, 'tambahAnggota']); // Menambahkan anggota ke pesanan
     Route::get('{pesananId}', [PesananController::class, 'lihatPesanan']); // Melihat detail pesanan
+    Route::delete('{id}', [PesananController::class, 'destroy']);
+
 });
 
 
@@ -56,4 +59,7 @@ Route::prefix('anggota-pesanan')->group(function () {
 });
 
 Route::get('transaksi', [TransaksiController::class, 'index']);
-Route::post('transaksi', [TransaksiController::class, 'create']);
+// Route::post('transaksi', [TransaksiController::class, 'create']);
+Route::post('/transaksi/store', [TransaksiController::class, 'store']);
+Route::post('/transaksi/update-pembayaran/{id}', [TransaksiController::class, 'updatePembayaran']);
+

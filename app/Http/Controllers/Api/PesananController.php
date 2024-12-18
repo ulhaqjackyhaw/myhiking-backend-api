@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 use Illuminate\Support\Facades\Log;
 use App\Models\Pesanan;
+use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Exception;
@@ -147,7 +148,7 @@ class PesananController extends Controller
     public function lihatPesanan($pesananId)
     {
         try {
-            $pesanan = Pesanan::with('gunung:id,nama', 'jalur:id,nama', 'pemesan:id,name', 'anggota')->findOrFail($pesananId);
+            $pesanan = Pesanan::with('gunung:id,nama', 'jalur:id,nama', 'pemesan:id,name', 'anggota:id')->findOrFail($pesananId);
 
             return response()->json([
                 'pesanan' => $pesanan,
@@ -204,8 +205,32 @@ class PesananController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pesanan $pesanan)
+    public function destroy($id)
     {
-        //
+        try {
+            // Cari pesanan berdasarkan ID
+            $pesanan = Pesanan::findOrFail($id);
+
+            // Cari transaksi terkait berdasarkan id_pesanan
+            $transaksi = Transaksi::where('id_pesanan', $pesanan->id)->first();
+
+            // Hapus transaksi jika ada
+            if ($transaksi) {
+                $transaksi->delete();
+            }
+
+            // Hapus pesanan
+            $pesanan->delete();
+
+            return response()->json([
+                'message' => 'Pesanan dan transaksi terkait berhasil dihapus.',
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat menghapus pesanan.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
+
 }
