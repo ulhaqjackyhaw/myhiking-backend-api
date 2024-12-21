@@ -192,7 +192,8 @@ class TransaksiController extends Controller
             // Update data transaksi
             $transaksi->update([
                 'bukti' => $filePath,
-                'waktu_pembayaran' => $request->waktu_pembayaran,
+                // 'waktu_pembayaran' => $request->waktu_pembayaran,
+                'waktu_pembayaran' => now(),
                 'status_pesanan' => 'Verified',
             ]);
 
