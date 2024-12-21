@@ -194,7 +194,7 @@ class TransaksiController extends Controller
                 'bukti' => $filePath,
                 // 'waktu_pembayaran' => $request->waktu_pembayaran,
                 'waktu_pembayaran' => now(),
-                'status_pesanan' => 'Verified',
+                'status_pesanan' => 'Unverified',
             ]);
 
             return response()->json([
