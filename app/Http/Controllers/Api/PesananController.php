@@ -148,7 +148,7 @@ class PesananController extends Controller
     public function lihatPesanan($pesananId)
     {
         try {
-            $pesanan = Pesanan::with('gunung:id,nama', 'jalur:id,nama', 'pemesan:id,name', 'anggota:id')->findOrFail($pesananId);
+            $pesanan = Pesanan::with('gunung:id,nama', 'jalur:id,nama', 'pemesan:id,name', 'anggota')->findOrFail($pesananId);
 
             return response()->json([
                 'pesanan' => $pesanan,
