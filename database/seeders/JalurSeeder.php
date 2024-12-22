@@ -23,7 +23,7 @@ class JalurSeeder extends Seeder
             'village_id' => '3328152007',
             'jarak' => '5',
             'deskripsi' => 'Jalur pendakian melalui Selo',
-            'map_basecamp' => 'Basecamp Selo',
+            'map_basecamp' => 'https://maps.app.goo.gl/Mn3kiXcKEmtoqdqc6',
             'gambar_jalur' => 'img_image_merbabu_jalur.jpg',
             'biaya' => 15000,
             'id_gunung' => $gunung1->id,  // Mengaitkan dengan Gunung Merbabu
