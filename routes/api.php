@@ -51,6 +51,7 @@ Route::prefix('pesanan')->group(function () {
 
 });
 
+Route::get('/pesanan/{pesananId}/detailPesanan', [PesananController::class, 'getDetailPesanan']);
 
 Route::prefix('anggota-pesanan')->group(function () {
     Route::post('{pesananId}/tambah', [AnggotaPesananController::class, 'tambahAnggota']); // Menambahkan anggota
