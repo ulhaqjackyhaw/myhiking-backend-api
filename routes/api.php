@@ -57,3 +57,6 @@ Route::prefix('anggota-pesanan')->group(function () {
 
 Route::get('transaksi', [TransaksiController::class, 'index']);
 Route::post('transaksi', [TransaksiController::class, 'create']);
+
+Route::post('users/{id}', [AuthController::class, 'update']);
+

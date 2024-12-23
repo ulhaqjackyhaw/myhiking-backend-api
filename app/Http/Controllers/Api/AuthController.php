@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -80,7 +81,12 @@ class AuthController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::all();
+        return response()->json([
+            'success' => true,
+            'message' => 'List of all users',
+            'data' => $users,
+        ], 200);
     }
 
     /**
@@ -102,10 +108,34 @@ class AuthController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show($id)
     {
-        //
+        // Cari user berdasarkan ID
+        $user = User::find($id);
+
+        // Jika user tidak ditemukan
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'User not found',
+            ], 404);
+        }
+
+        // Return data user
+        return response()->json([
+            'success' => true,
+            'message' => 'User details retrieved successfully',
+            'data' => [
+                'name' => $user->name,
+                'email' => $user->email,
+                'address' => $user->address,
+                'nik' => $user->nik,
+                'phone' => $user->phone,
+                'emergency_phone' => $user->emergency_phone,
+            ],
+        ], 200);
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -118,10 +148,68 @@ class AuthController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
-    {
-        //
-    }
+    
+     public function update(Request $request, $id)
+     {
+         $rules = [
+             'name' => 'required|string|max:255',
+             'email' => 'required|string|email|max:255',
+             'password' => 'nullable|string|min:8',
+             'address' => 'nullable|string|max:255',
+             'nik' => 'nullable|numeric|unique:users,nik,' . $id,
+             'phone' => 'nullable|numeric|unique:users,phone,' . $id,
+             'emergency_phone' => 'nullable|numeric',
+             'date_of_birth' => 'nullable|date',
+             'level' => 'nullable',
+             'profile_picture' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
+         ];
+     
+         $validator = Validator::make($request->all(), $rules);
+     
+         if ($validator->fails()) {
+             return response()->json([
+                 'success' => false,
+                 'message' => 'Validation errors',
+                 'data' => $validator->errors(),
+             ], 422);
+         }
+     
+         $user = User::findOrFail($id);
+     
+         // Handle profile picture update
+         if ($request->hasFile('profile_picture')) {
+             // Delete old profile picture if exists
+             if ($user->profile_picture) {
+                 Storage::disk('public')->delete($user->profile_picture);
+             }
+             // Save new profile picture
+             $filePath = $request->file('profile_picture')->store('profile_pictures', 'public');
+             $user->profile_picture = $filePath;
+         }
+     
+         // Update password if provided
+         if ($request->filled('password')) {
+             $user->password = Hash::make($request->password);
+         }
+     
+         // Update other fields
+         $user->name = $request->name;
+         $user->level = $request->level;
+         $user->email = $request->email;
+         $user->address = $request->address;
+         $user->nik = $request->nik;
+         $user->phone = $request->phone;
+         $user->emergency_phone = $request->emergency_phone;
+         $user->date_of_birth = $request->date_of_birth;
+     
+         $user->save();
+     
+         return response()->json([
+             'success' => true,
+             'message' => 'User updated successfully',
+             'data' => $user,
+         ], 200);
+     }     
 
     /**
      * Remove the specified resource from storage.
