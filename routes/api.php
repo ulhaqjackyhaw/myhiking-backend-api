@@ -9,6 +9,8 @@ use App\Http\Controllers\Api\JalurController;
 use App\Http\Controllers\Api\PesananController;
 use App\Http\Controllers\Api\AnggotaPesananController;
 use App\Http\Controllers\Api\TransaksiController;
+use App\Http\Controllers\API\TataTertibController;
+use App\Models\Pesanan;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,8 +48,11 @@ Route::prefix('pesanan')->group(function () {
     Route::post('/', [PesananController::class, 'buatPesanan']);
     Route::post('{pesananId}/tambah-anggota', [PesananController::class, 'tambahAnggota']); // Menambahkan anggota ke pesanan
     Route::get('{pesananId}', [PesananController::class, 'lihatPesanan']); // Melihat detail pesanan
+    Route::delete('{id}', [PesananController::class, 'destroy']);
+
 });
 
+Route::get('/pesanan/{pesananId}/detailPesanan', [PesananController::class, 'getDetailPesanan']);
 
 Route::prefix('anggota-pesanan')->group(function () {
     Route::post('{pesananId}/tambah', [AnggotaPesananController::class, 'tambahAnggota']); // Menambahkan anggota
@@ -56,7 +61,17 @@ Route::prefix('anggota-pesanan')->group(function () {
 });
 
 Route::get('transaksi', [TransaksiController::class, 'index']);
-Route::post('transaksi', [TransaksiController::class, 'create']);
+// Route::post('transaksi', [TransaksiController::class, 'create']);
+Route::post('/transaksi/store', [TransaksiController::class, 'store']);
+Route::post('/transaksi/update-pembayaran/{id}', [TransaksiController::class, 'updatePembayaran']);
+
+Route::prefix('tata-tertib')->group(function () {
+    Route::get('/', [TataTertibController::class, 'index']); // Get all
+    Route::post('/', [TataTertibController::class, 'store']); // Create
+    Route::get('/{id}', [TataTertibController::class, 'show']); // Get by ID
+    Route::put('/{id}', [TataTertibController::class, 'update']); // Update
+    Route::delete('/{id}', [TataTertibController::class, 'destroy']); // Delete
+    Route::get('/jalur/{jalurId}', [TataTertibController::class, 'getByJalur']); // Get by Jalur ID
+});
 
 Route::post('users/{id}', [AuthController::class, 'update']);
-

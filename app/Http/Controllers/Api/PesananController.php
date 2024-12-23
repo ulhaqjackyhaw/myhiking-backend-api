@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 use Illuminate\Support\Facades\Log;
 use App\Models\Pesanan;
+use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Exception;
@@ -160,6 +161,37 @@ class PesananController extends Controller
             ], 404);
         }
     }
+    public function getDetailPesanan($pesananId)
+    {
+        try {
+            $pesanan = Pesanan::with(['pemesan:id,name', 'anggota', 'transaksi'])
+                ->findOrFail($pesananId);
+
+            if (!$pesanan->transaksi) {
+                throw new \Exception('Transaksi tidak ditemukan untuk pesanan ini.');
+            }
+
+            $detailPesanan = [
+                'id_pesanan' => $pesanan->id,
+                'tanggal_pesanan' => $pesanan->tanggal_naik,
+                'nama_pemesan' => $pesanan->pemesan->name,
+                'total_anggota' => $pesanan->anggota->count() + 1, // +1 for the main booker
+                'total_harga' => $pesanan->transaksi->total_bayar,
+            ];
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil mengambil detail pesanan',
+                'data' => $detailPesanan,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengambil detail pesanan',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -204,8 +236,32 @@ class PesananController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pesanan $pesanan)
+    public function destroy($id)
     {
-        //
+        try {
+            // Cari pesanan berdasarkan ID
+            $pesanan = Pesanan::findOrFail($id);
+
+            // Cari transaksi terkait berdasarkan id_pesanan
+            $transaksi = Transaksi::where('id_pesanan', $pesanan->id)->first();
+
+            // Hapus transaksi jika ada
+            if ($transaksi) {
+                $transaksi->delete();
+            }
+
+            // Hapus pesanan
+            $pesanan->delete();
+
+            return response()->json([
+                'message' => 'Pesanan dan transaksi terkait berhasil dihapus.',
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat menghapus pesanan.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
+
 }

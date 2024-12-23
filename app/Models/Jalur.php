@@ -52,4 +52,8 @@ class Jalur extends Model
     {
         return $this->hasOne(Pesanan::class, 'user_id');
     }
+    public function tataTertibs()
+    {
+        return $this->hasMany(TataTertib::class);
+    }
 }

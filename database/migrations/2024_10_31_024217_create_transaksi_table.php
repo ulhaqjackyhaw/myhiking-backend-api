@@ -13,9 +13,9 @@ return new class extends Migration
             $table->bigInteger('id_pesanan')->constrained('pesanan')->onDelete('cascade');
             $table->string('metode_pembayaran', 60);
             $table->integer('total_bayar');
-            $table->enum('status_pesanan', ['Verified', 'unverified'])->default('Unverified'); // Kolom status dengan pilihan enum
-            $table->date('waktu_pembayaran');
-            $table->string('bukti');
+            $table->enum('status_pesanan', ['Verified', 'Unverified'])->default('Unverified'); // Kolom status dengan pilihan enum
+            $table->date('waktu_pembayaran')->nullable();
+            $table->string('bukti')->nullable();
             $table->timestamps(); // Kolom created_at dan updated_at
 
             $table->foreign('id_pesanan')->references('id')->on('pesanan')->onDelete('cascade');
