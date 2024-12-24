@@ -12,7 +12,7 @@ class RiwayatController extends Controller
     public function index(Request $request)
 {
     $query = PesananWeb::with(['user:id,name', 'anggotaPesanan.user']) // Memuat relasi user dan anggotaPesanan
-        ->select('id', 'tanggal_naik', 'tanggal_turun', 'status', 'id_users'); // Menambahkan 'id_user' dalam query
+        ->select('id', 'tanggal_naik', 'tanggal_turun', 'status', 'id_user'); // Menambahkan 'id_user' dalam query
 
     // Filter berdasarkan ID pesanan
     if ($request->filled('search')) {
