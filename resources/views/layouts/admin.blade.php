@@ -81,6 +81,13 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('tata_tertib.index') }}">
+                    <i class="fas fa-book"></i> Tata Tertib
+                </a>
+            </li>
+
+
             <!-- Nav Item - Transaksi -->
             <li class="nav-item {{ request()->routeIs('transaksi.index') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('transaksi.index') }}">

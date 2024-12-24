@@ -10,6 +10,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TataTertibController;
 // use App\Http\Controllers\CheckController;
 
 
@@ -49,6 +50,7 @@ Route::get('/gunung', [GunungController::class, 'index'])->name('gunung');
 Route::resource('gunung', GunungController::class)->except(['index']);
 Route::resource('gunung', GunungController::class);
 Route::resource('jalur', JalurController::class);
+Route::resource('tata_tertib', TataTertibController::class);
 
 Route::get('/get-regencies/{province_id}', [WilayahController::class, 'getRegencies']);
 Route::get('/get-districts/{regency_id}', [WilayahController::class, 'getDistricts']);
