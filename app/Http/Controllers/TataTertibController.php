@@ -34,9 +34,9 @@ class TataTertibController extends Controller
 
     public function edit(TataTertib $tataTertib)
     {
-        return view('tata_tertib.edit', compact('tataTertib'));
+        $jalurs = JalurWeb::all();
+        return view('tata_tertib.edit', compact('tataTertib', 'jalurs'));
     }
-
     public function update(Request $request, TataTertib $tataTertib)
     {
         $request->validate([

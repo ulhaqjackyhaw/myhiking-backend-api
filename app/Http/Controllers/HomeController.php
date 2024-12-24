@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -32,8 +33,9 @@ class HomeController extends Controller
         $totalGunung = GunungWeb::count(); // Hitung jumlah gunung
         $totalJalur = JalurWeb::count(); // Hitung jumlah jalur
         $totalUser = UserWeb::count(); // Hitung jumlah user
+        $totalPendapatan = TransaksiWeb::sum('total_bayar'); // Total pendapatan dari semua transaksi
 
         // Mengirim data ke view
-        return view('home', compact('totalTransaksi', 'totalGunung', 'totalJalur', 'totalUser'));
+        return view('home', compact('totalTransaksi', 'totalGunung', 'totalJalur', 'totalUser','totalPendapatan'));
     }
 }

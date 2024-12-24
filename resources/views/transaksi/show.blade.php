@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container bg-white p-4 rounded">
+<body style="background: #117958">
+    <div class="container bg-white p-4 rounded position-relative">
     <h1 class="text-center mb-4" style="font-weight: bold; color: black;">Rincian Transaksi</h1>
     <table class="table table-bordered">
         <tr>

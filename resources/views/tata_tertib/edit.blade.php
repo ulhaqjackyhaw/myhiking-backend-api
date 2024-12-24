@@ -18,9 +18,9 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="description">Description</label>
-                <textarea name="description" id="description" class="form-control" required>{{ $tataTertib->description }}</textarea>
-            </div>
+            <label for="description">Description</label>
+            <textarea name="description" id="description" class="form-control" rows="5" style="width: 100%;" required>{{ $tataTertib->description }}</textarea>
+        </div>
             <button type="submit" class="btn btn-primary">Update</button>
         </form>
     </div>
