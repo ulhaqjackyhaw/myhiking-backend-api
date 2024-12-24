@@ -47,7 +47,7 @@
                                 <td>{{ $gunung->ketinggian ?? 'Tidak Diketahui' }} mdpl</td>
                                 <td class="text-center">
                                     @if ($gunung->gambar_gunung)
-                                    <img src="{{ asset('storage/' . $gunung->gambar_gunung) }}" class="rounded" style="width: 150px">
+                                    <img src="{{ asset('/storage/images/' . $gunung->gambar_gunung) }}" class="rounded" style="width: 150px">
                                     @else
                                         <span>Tidak Ada Gambar</span>
                                     @endif

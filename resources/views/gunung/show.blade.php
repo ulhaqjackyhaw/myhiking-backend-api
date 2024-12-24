@@ -15,7 +15,7 @@
                                 <div class="card border-0 shadow-sm rounded">
                                     <div class="card-body">
                                         @if ($gunung->gambar_gunung)
-                                        <img src="{{ asset('storage/' . $gunung->gambar_gunung) }}" class="rounded" style="width: 100%">
+                                        <img src="{{ asset('/storage/images/' . $gunung->gambar_gunung) }}" class="rounded" style="width: 100%">
                                         @else
                                         <p><strong>Tidak ada gambar</strong></p>
                                         @endif

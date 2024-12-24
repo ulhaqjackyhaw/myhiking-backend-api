@@ -54,7 +54,7 @@
                     <td>{{ $j->map_basecamp }}</td>
                     <td class="text-center">
                         @if ($j->gambar_jalur)
-                            <img src="{{ asset('storage/' . $j->gambar_jalur) }}" alt="Gambar Jalur" style="width: 100px; height: auto;">
+                            <img src="{{ asset('/storage/images/' . $j->gambar_jalur) }}" alt="Gambar Jalur" style="width: 100px; height: auto;">
                         @else
                             Tidak Ada Gambar
                         @endif
