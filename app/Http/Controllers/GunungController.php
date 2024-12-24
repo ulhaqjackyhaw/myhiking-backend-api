@@ -137,4 +137,11 @@ class GunungController extends Controller
 
         return redirect()->route('gunung.index')->with('success', 'Gunung berhasil dihapus!');
     }
+    public function show($id)
+    {
+        $gunung = GunungWeb::with(['province', 'regency', 'district', 'village'])
+            ->findOrFail($id);
+
+        return view('gunung.show', compact('gunung'));
+    }
 }

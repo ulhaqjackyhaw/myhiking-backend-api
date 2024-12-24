@@ -28,7 +28,7 @@
             <th>Bukti Pembayaran</th>
             <td class="text-center">
                 @if ($transaksi->bukti)
-                <img src="{{ asset($transaksi->bukti) }}" alt="Bukti Pembayaran" class="img-fluid" style="max-width: 300px; border-radius: 5px;">
+                <img src="{{ asset('storage/bukti_pembayaran/' . $transaksi->bukti) }}">
                 @else
                 <p class="text-danger">Tidak ada bukti pembayaran.</p>
                 @endif
