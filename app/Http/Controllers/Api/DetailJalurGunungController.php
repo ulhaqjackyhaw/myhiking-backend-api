@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Api;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Jalur;
 use App\Models\Gunung; // pastikan menggunakan Gunung jika diperlukan
@@ -23,7 +23,7 @@ class DetailJalurGunungController extends Controller
                 'message' => 'Jalur not found or not associated with the specified gunung',
             ], 404); // Mengembalikan status 404 jika jalur tidak ditemukan
         }
-        $imageUrl = url('/images/' . $jalur->gambar_jalur); // Sesuaikan dengan tempat penyimpanan gambar Anda
+        $imageUrl = url('storage/images/' . $jalur->gambar_jalur); // Sesuaikan dengan tempat penyimpanan gambar Anda
 
         // Membuat array hasil yang diformat
         $result = [
@@ -69,7 +69,7 @@ class DetailJalurGunungController extends Controller
                 'message' => 'Jalur not found or not associated with the specified gunung',
             ], 404); // Mengembalikan status 404 jika jalur tidak ditemukan
         }
-        $imageUrl = url('/images/' . $jalur->gambar_jalur); // Sesuaikan dengan tempat penyimpanan gambar Anda
+        $imageUrl = url('storage/images/' . $jalur->gambar_jalur); // Sesuaikan dengan tempat penyimpanan gambar Anda
 
         // Membuat array hasil yang diformat
         $result = [

@@ -11,7 +11,7 @@ class JalurController extends Controller
     public function index($id_gunung)
     {
         $gunung = Gunung::with(['jalur'])->findOrFail($id_gunung);
-        $imageUrl = url('/images/' . $gunung->gambar_gunung); // Sesuaikan dengan tempat penyimpanan gambar Anda
+        $imageUrl = url('storage/images/' . $gunung->gambar_gunung); // Sesuaikan dengan tempat penyimpanan gambar Anda
 
         return response()->json([
             'status' => true,

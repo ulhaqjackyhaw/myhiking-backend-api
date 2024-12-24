@@ -3,7 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DetailJalurGunungController;
+use App\Http\Controllers\Api\DetailJalurGunungController;
 use App\Http\Controllers\Api\GunungController;
 use App\Http\Controllers\Api\JalurController;
 use App\Http\Controllers\Api\PesananController;
