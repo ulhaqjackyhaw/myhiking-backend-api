@@ -150,7 +150,31 @@ class AuthController extends Controller
     /**
      * Update the specified resource in storage.
      */
+    public function getUserData($id = null)
+    {
+        // Jika ID user tidak diberikan, ambil ID user yang sedang login
+        if ($id === null) {
+            $id = Auth::id();
+        }
 
+        // Cari user berdasarkan ID
+        $user = User::find($id);
+
+        // Jika user tidak ditemukan
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'User not found',
+            ], 404);
+        }
+
+        // Return semua data user
+        return response()->json([
+            'success' => true,
+            'message' => 'User data retrieved successfully',
+            'data' => $user,
+        ], 200);
+    }
     public function update(Request $request, $id)
     {
         $rules = [
@@ -210,6 +234,44 @@ class AuthController extends Controller
             'success' => true,
             'message' => 'User updated successfully',
             'data' => $user,
+        ], 200);
+    }
+
+    public function updatePassword(Request $request, $id)
+    {
+        $rules = [
+            'old_password' => 'required|string',
+            'new_password' => 'required|string|min:8|different:old_password',
+            'confirm_password' => 'required|string|same:new_password',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation errors',
+                'data' => $validator->errors(),
+            ], 422);
+        }
+
+        $user = User::findOrFail($id);
+
+        // Verifikasi password lama
+        if (!Hash::check($request->old_password, $user->password)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Old password is incorrect',
+            ], 401);
+        }
+
+        // Update password
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Password updated successfully',
         ], 200);
     }
 

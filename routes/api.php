@@ -64,6 +64,8 @@ Route::get('transaksi', [TransaksiController::class, 'index']);
 // Route::post('transaksi', [TransaksiController::class, 'create']);
 Route::post('/transaksi/store', [TransaksiController::class, 'store']);
 Route::post('/transaksi/update-pembayaran/{id}', [TransaksiController::class, 'updatePembayaran']);
+Route::post('/transaksi/{transaksi_id}/pembayaran', [TransaksiController::class, 'storePembayaran']);
+Route::put('/transaksi/{transaksi_id}/pembayaran', [TransaksiController::class, 'updatePembayaran']);
 
 Route::prefix('tata-tertib')->group(function () {
     Route::get('/', [TataTertibController::class, 'index']); // Get all
@@ -73,5 +75,9 @@ Route::prefix('tata-tertib')->group(function () {
     Route::delete('/{id}', [TataTertibController::class, 'destroy']); // Delete
     Route::get('/jalur/{jalurId}', [TataTertibController::class, 'getByJalur']); // Get by Jalur ID
 });
-
+Route::middleware('auth:sanctum')->group(function () {
+    // ... route lainnya
+    Route::post('/update-password/{id}', [AuthController::class, 'updatePassword']);
+});
+Route::get('/user-data/{id?}', [AuthController::class, 'getUserData']);
 Route::post('users/{id}', [AuthController::class, 'update']);

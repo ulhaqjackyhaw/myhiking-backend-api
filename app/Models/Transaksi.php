@@ -20,9 +20,13 @@ class Transaksi extends Model
         'bukti',
     ];
 
-     // Relasi ke model Pesanan
+    // Relasi ke model Pesanan
     public function pesanan()
     {
         return $this->belongsTo(Pesanan::class, 'id_pesanan');
+    }
+    public function payment()
+    {
+        return $this->hasOne(Payment::class, 'transaksi_id');
     }
 }
