@@ -2,7 +2,7 @@
 
 @section('main-content')
 <div class="container bg-white p-4 rounded mt-4">
-    <h1 class="mb-4 text-center" style="font-weight: bold; color: #117958;">Tata Tertib</h1>
+    <h1 class="mb-4 text-center" style="font-weight: bold; color:rgb(0, 0, 0);">Daftar Tata Tertib</h1>
 
     <a href="{{ route('tata_tertib.create') }}" class="btn mb-3" style="background-color: #FFA500; color: white;">
         <i class="fas fa-plus"></i> Create Tata Tertib

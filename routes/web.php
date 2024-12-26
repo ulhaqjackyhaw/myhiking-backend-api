@@ -11,6 +11,7 @@ use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TataTertibController;
+use App\Http\Controllers\PaymentController;
 // use App\Http\Controllers\CheckController;
 
 
@@ -75,6 +76,7 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
 Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
 // Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
+Route::patch('/transaksi/{id}/verify', [TransaksiController::class, 'verify'])->name('transaksi.verify');
 
 Route::middleware('auth')->group(function () {
     Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
@@ -87,6 +89,6 @@ Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index
 Route::get('/riwayat/{id}', [RiwayatController::class, 'show'])->name('riwayat.show');
 Route::post('/riwayat/scan', [RiwayatController::class, 'scan'])->name('riwayat.scan');
 Route::post('/riwayat/{id}/update-status', [RiwayatController::class, 'updateStatus'])->name('riwayat.updateStatus');
-
+Route::resource('payments', PaymentController::class);
 
 

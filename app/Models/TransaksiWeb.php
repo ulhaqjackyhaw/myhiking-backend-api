@@ -15,8 +15,9 @@ class TransaksiWeb extends Model
     // Kolom yang dapat diisi secara mass assignment
     protected $fillable = [
         'id_pesanan',
-        'metode_pembayaran',
+        'payment_id',
         'total_bayar',
+        'status_pesanan',
         'waktu_pembayaran',
         'bukti',
     ];
@@ -32,7 +33,18 @@ class TransaksiWeb extends Model
     {
         return $this->belongsTo(PesananWeb::class, 'id_pesanan');
     }
+    protected static function boot()
+    {
+        parent::boot();
 
+        static::saving(function ($model) {
+            if (is_null($model->waktu_pembayaran) || is_null($model->bukti)) {
+                $model->status_pesanan = 'Incomplete';
+            } else {
+                $model->status_pesanan = 'Unverified';
+            }
+        });
+    }
     /**
      * Scope untuk transaksi dengan metode pembayaran tertentu
      */
