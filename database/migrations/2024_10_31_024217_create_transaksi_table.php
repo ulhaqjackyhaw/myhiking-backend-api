@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->bigInteger('id_pesanan')->constrained('pesanan')->onDelete('cascade');
             $table->unsignedBigInteger('payment_id'); // Foreign key ke tabel payments
             $table->integer('total_bayar');
-            $table->enum('status_pesanan', ['Verified', 'Unverified'])->default('Unverified'); // Kolom status dengan pilihan enum
+            $table->enum('status_pesanan', ['Verified', 'Unverified', 'Incomplete'])->default('Incomplete'); // Kolom status dengan pilihan enum
             $table->date('waktu_pembayaran')->nullable();
             $table->string('bukti')->nullable();
             $table->timestamps(); // Kolom created_at dan updated_at

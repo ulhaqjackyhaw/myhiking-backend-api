@@ -77,7 +77,7 @@ class TransaksiController extends Controller
                 'id_pesanan' => $request->id_pesanan,
                 'payment_id' => $request->payment_id,
                 'total_bayar' => $totalBayar,
-                'status_pesanan' => 'Unverified',
+                'status_pesanan' => 'Incomplete',
                 'waktu_pembayaran' => null,
                 'bukti' => null,
             ]);
