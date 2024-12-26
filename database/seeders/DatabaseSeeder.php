@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             VillagesTableSeeder::class,
             GunungSeeder::class,
             JalurSeeder::class,
-            TataTertibSeeder::class
+            TataTertibSeeder::class,
+            PaymentsTableSeeder::class
         ]);
     }
 }
