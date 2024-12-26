@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Payment extends Model
 {
-    protected $fillable = ['nama_pembayaran', 'nomor_pembayaran', 'transaksi_id'];
+    protected $fillable = ['nama_pembayaran', 'nomor_pembayaran', 'gambar_pembayaran'];
 
     public function transaksi()
     {
-        return $this->belongsTo(Transaksi::class, 'transaksi_id');
+        return $this->hasMany(Transaksi::class, 'payment_id'); // Relasi One-to-Many
     }
 }

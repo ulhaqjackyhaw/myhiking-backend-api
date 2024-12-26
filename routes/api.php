@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\PesananController;
 use App\Http\Controllers\Api\AnggotaPesananController;
 use App\Http\Controllers\Api\TransaksiController;
 use App\Http\Controllers\API\TataTertibController;
+use App\Http\Controllers\Api\PaymentController;
 use App\Models\Pesanan;
 
 /*
@@ -40,8 +41,6 @@ Route::get('gunung', [GunungController::class, 'index']);
 Route::get('/gunung/{id_gunung}', [JalurController::class, 'index']);
 Route::get('/gunung/{id_gunung}/jalur/{id_jalur}', [DetailJalurGunungController::class, 'index']);
 Route::get('/gunung/{id_gunung}/jalur/{id_jalur}/jalurbooking', [DetailJalurGunungController::class, 'JalurBooking']);
-// Route::get('/gunung/beranda', [GunungController::class, 'getGunungForBeranda']);
-// Route::resource('pesanan', PesananController::class);
 Route::get('/pesanan', [PesananController::class, 'index']);
 
 Route::prefix('pesanan')->group(function () {
@@ -64,8 +63,11 @@ Route::get('transaksi', [TransaksiController::class, 'index']);
 // Route::post('transaksi', [TransaksiController::class, 'create']);
 Route::post('/transaksi/store', [TransaksiController::class, 'store']);
 Route::post('/transaksi/update-pembayaran/{id}', [TransaksiController::class, 'updatePembayaran']);
-Route::post('/transaksi/{transaksi_id}/pembayaran', [TransaksiController::class, 'storePembayaran']);
-Route::put('/transaksi/{transaksi_id}/pembayaran', [TransaksiController::class, 'updatePembayaran']);
+Route::get('/transaksi/{id}/with-payment', [TransaksiController::class, 'getTransactionWithPayment']);
+
+
+Route::get('/payments', [PaymentController::class, 'index']);
+Route::post('/payments', [PaymentController::class, 'store']);
 
 Route::prefix('tata-tertib')->group(function () {
     Route::get('/', [TataTertibController::class, 'index']); // Get all

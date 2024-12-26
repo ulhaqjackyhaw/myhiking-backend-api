@@ -13,7 +13,7 @@ class Transaksi extends Model
 
     protected $fillable = [
         'id_pesanan',
-        'metode_pembayaran', //
+        'payment_id',
         'total_bayar',
         'status_pesanan',
         'waktu_pembayaran',
@@ -27,6 +27,6 @@ class Transaksi extends Model
     }
     public function payment()
     {
-        return $this->hasOne(Payment::class, 'transaksi_id');
+        return $this->belongsTo(Payment::class, 'payment_id'); // Relasi Many-to-One
     }
 }

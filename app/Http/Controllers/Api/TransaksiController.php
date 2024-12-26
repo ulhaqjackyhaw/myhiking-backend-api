@@ -11,41 +11,16 @@ use Illuminate\Support\Facades\Storage;
 
 class TransaksiController extends Controller
 {
-    // public function index()
-    // {
-    //     try{
-    //         $transaksi = Transaksi::all();
-
-    //         return response()->json([
-    //             'success' => true,
-    //             'message' => 'Successfully get data on transaksi',
-    //             'data' => $transaksi,
-    //         ], 200);
-    //     }catch (\Exception $e) {
-    //         return response()->json([
-    //             'success' => false,
-    //             'message' => 'Failed to get data on transaksi',
-    //             'data' => $e->getMessage(),
-    //         ], 500);
-    //     }
-
-    // }
-
 
     public function index()
     {
-        try{
-            // Mengambil semua data transaksi dari database
-            $transaksi = Transaksi::with("pesanan.gunung", "pesanan.jalur", "pesanan.anggota:id", "pesanan.pemesan")->get()->map(function ($item) {
-            // $status = 'Unverified';
-            // if ($item->status == 'Verivied') {
-            //     $status = 'Verified';
-            // }
-
+        try {
+            // Mengambil semua data transaksi dengan relasi terkait
+            $transaksi = Transaksi::with("pesanan.gunung", "pesanan.jalur", "pesanan.anggota:id", "pesanan.pemesan", "payment")->get()->map(function ($item) {
                 return [
                     "id" => (string) $item->id,
                     "id_pesanan" => $item->id_pesanan,
-                    "metode_pembayaran" => $item->metode_pembayaran,
+                    "payment" => $item->payment->nama_pembayaran, // Nama payment dari relasi
                     "total_bayar" => $item->total_bayar,
                     "status" => $item->status_pesanan,
                     "waktu_pembayaran" => $item->waktu_pembayaran,
@@ -57,13 +32,12 @@ class TransaksiController extends Controller
                 ];
             });
 
-            // Mengembalikan response dalam format JSON
             return response()->json([
                 'success' => true,
                 'message' => 'Successfully get data on transaksi',
                 'data' => $transaksi,
             ], 200);
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to get data on transaksi',
@@ -72,61 +46,15 @@ class TransaksiController extends Controller
         }
     }
 
-    // public function create(Request $request)
-    // {
-    //     // Validasi data input
-    //     $validator = Validator::make($request->all(), [
-    //         'id_pesanan' => 'required|exists:pesanan,id',
-    //         'metode_pembayaran' => 'required|string|max:60',
-    //         'total_bayar' => 'required|integer|min:0',
-    //         'status_pesanan' => 'required|in:Verified,Unverified',
-    //         'waktu_pembayaran' => 'required|date',
-    //         'bukti' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Maksimal ukuran 2 MB
-    //     ]);
-
-    //     // Jika validasi gagal
-    //     if ($validator->fails()) {
-    //         return response()->json([
-    //             'message' => 'Validasi gagal.',
-    //             'errors' => $validator->errors(),
-    //         ], 422);
-    //     }
-
-    //     try {
-    //         // Simpan file bukti pembayaran
-    //         $filePath = $request->file('bukti')->store('bukti_pembayaran', 'public');
-
-    //         // Tambahkan data transaksi
-    //         $transaksi = Transaksi::create([
-    //             'id_pesanan' => $request->id_pesanan,
-    //             'metode_pembayaran' => $request->metode_pembayaran,
-    //             'total_bayar' => $request->total_bayar,
-    //             'status_pesanan' => $request->status_pesanan,
-    //             'waktu_pembayaran' => $request->waktu_pembayaran,
-    //             'bukti' => $filePath,
-    //         ]);
-
-    //         return response()->json([
-    //             'message' => 'Transaksi berhasil ditambahkan.',
-    //             'transaksi' => $transaksi,
-    //         ], 201);
-    //     } catch (\Exception $e) {
-    //         return response()->json([
-    //             'message' => 'Terjadi kesalahan saat menambahkan transaksi.',
-    //             'error' => $e->getMessage(),
-    //         ], 500);
-    //     }
-    // }
 
     public function store(Request $request)
     {
         // Validasi data input
         $validator = Validator::make($request->all(), [
             'id_pesanan' => 'required|exists:pesanan,id',
-            'metode_pembayaran' => 'required|string|max:60',
+            'payment_id' => 'required|exists:payments,id', // Validasi payment_id
         ]);
 
-        // Jika validasi gagal
         if ($validator->fails()) {
             return response()->json([
                 'message' => 'Validasi gagal.',
@@ -139,15 +67,15 @@ class TransaksiController extends Controller
             $pesanan = Pesanan::with('anggota')->findOrFail($request->id_pesanan);
 
             // Hitung jumlah anggota (termasuk pemesan)
-            $jumlahAnggota = count($pesanan->anggota) + 1; // Anggota + pemesan
+            $jumlahAnggota = count($pesanan->anggota) + 1;
 
-            // Hitung total_bayar
+            // Hitung total bayar
             $totalBayar = $jumlahAnggota * $pesanan->total_harga_tiket;
 
             // Tambahkan data transaksi awal
             $transaksi = Transaksi::create([
                 'id_pesanan' => $request->id_pesanan,
-                'metode_pembayaran' => $request->metode_pembayaran,
+                'payment_id' => $request->payment_id,
                 'total_bayar' => $totalBayar,
                 'status_pesanan' => 'Unverified',
                 'waktu_pembayaran' => null,
@@ -166,6 +94,7 @@ class TransaksiController extends Controller
         }
     }
 
+
     public function updatePembayaran(Request $request, $id)
     {
         // Validasi data input
@@ -174,7 +103,6 @@ class TransaksiController extends Controller
             'waktu_pembayaran' => 'required|date',
         ]);
 
-        // Jika validasi gagal
         if ($validator->fails()) {
             return response()->json([
                 'message' => 'Validasi gagal.',
@@ -192,9 +120,8 @@ class TransaksiController extends Controller
             // Update data transaksi
             $transaksi->update([
                 'bukti' => $filePath,
-                // 'waktu_pembayaran' => $request->waktu_pembayaran,
                 'waktu_pembayaran' => now(),
-                'status_pesanan' => 'Unverified',
+                'status_pesanan' => 'Unverified', // Ubah status menjadi Verified
             ]);
 
             return response()->json([
@@ -208,7 +135,37 @@ class TransaksiController extends Controller
             ], 500);
         }
     }
+    public function getTransactionWithPayment($transactionId)
+    {
+        // Ambil transaksi berdasarkan ID dan relasi dengan payment
+        $transaction = Transaksi::with('payment')->find($transactionId);
 
+        if (!$transaction) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Transaction not found',
+            ], 404);
+        }
 
+        // Gabungkan data transaksi dan payment
+        $data = [
+            'id' => $transaction->id,
+            'id_pesanan' => $transaction->id_pesanan,
+            'total_bayar' => $transaction->total_bayar,
+            'status_pesanan' => $transaction->status_pesanan,
+            'waktu_pembayaran' => $transaction->waktu_pembayaran,
+            'bukti' => $transaction->bukti,
+            'payment' => [
+                'id' => $transaction->payment->id,
+                'nama_pembayaran' => $transaction->payment->nama_pembayaran,
+                'gambar_pembayaran' => $transaction->payment->gambar_pembayaran,
+                'nomor_pembayaran' => $transaction->payment->nomor_pembayaran,
+            ],
+        ];
 
+        return response()->json([
+            'success' => true,
+            'data' => $data,
+        ], 200);
+    }
 }

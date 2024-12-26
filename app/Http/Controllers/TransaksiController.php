@@ -9,53 +9,38 @@ use Illuminate\Http\Request;
 class TransaksiController extends Controller
 {
     public function index(Request $request)
-{
-    $search = $request->get('search');
-    $transaksis = TransaksiWeb::query()
-        ->when($search, function ($query, $search) {
-            return $query->where('id_pesanan', 'LIKE', "%{$search}%")
-                         ->orWhere('metode_pembayaran', 'LIKE', "%{$search}%")
-                         ->orWhere('status_pesanan', 'LIKE', "%{$search}%");
-        })
-        ->get(); 
-    return view('transaksi.index', compact('transaksis'));
-}
+    {
+        $search = $request->get('search');
+        $transaksis = TransaksiWeb::query()
+            ->when($search, function ($query, $search) {
+                return $query->where('id_pesanan', 'LIKE', "%{$search}%")
+                    ->orWhere('metode_pembayaran', 'LIKE', "%{$search}%")
+                    ->orWhere('status_pesanan', 'LIKE', "%{$search}%");
+            })
+            ->get();
+        return view('transaksi.index', compact('transaksis'));
+    }
 
     public function show($id)
     {
         $transaksi = TransaksiWeb::findOrFail($id);
         return view('transaksi.show', compact('transaksi'));
     }
-     public function verify($id)
-        {
-            $transaksi = TransaksiWeb::findOrFail($id);
-            
-            // Periksa apakah status pesanan adalah 'unverified'
-            if ($transaksi->status_pesanan === 'Unverified') {
-                $transaksi->status_pesanan = 'Verified';  // Ubah status menjadi 'verified'
-                $transaksi->save();
-            }
+    public function verify($id)
+    {
+        $transaksi = TransaksiWeb::findOrFail($id);
 
-            return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil diverifikasi');
+        // Periksa apakah status pesanan adalah 'unverified'
+        if ($transaksi->status_pesanan === 'Unverified') {
+            $transaksi->status_pesanan = 'Verified';  // Ubah status menjadi 'verified'
+            $transaksi->save();
         }
 
-    // Controller untuk menambah transaksi baru
-    public function store(Request $request)
-    {
-        $transaksi = new TransaksiWeb;
-        $transaksi->id_pesanan = $request->id_pesanan;
-        $transaksi->metode_pembayaran = $request->metode_pembayaran;
-        $transaksi->total_bayar = $request->total_bayar;
-        $transaksi->status_pesanan = 'Unverified';  // Status default untuk transaksi baru
-    
-        // Debugging
-        dd($transaksi); // Cek apakah status pesanan benar-benar 'unverified'
-    
-        $transaksi->save();
-    
-        return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil ditambahkan');
+        return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil diverifikasi');
     }
-    
+
+    // Controller untuk menambah transaksi baru
+
 
 
 }
