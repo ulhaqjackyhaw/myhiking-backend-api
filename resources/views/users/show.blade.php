@@ -40,7 +40,7 @@
             <th>Foto Profil</th>
             <td class="text-center">
                 @if ($user->profile_picture)
-                <img src="{{ asset($user->profile_picture) }}" alt="Foto Profil" class="img-fluid" style="max-width: 300px; border-radius: 5px;">
+                <img src="{{ asset('/storage/'.$user->profile_picture) }}" alt="Foto Profil" class="img-fluid" style="max-width: 300px; border-radius: 5px;">
                 @else
                 <p class="text-danger">Tidak ada foto profil.</p>
                 @endif
