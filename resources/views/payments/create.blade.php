@@ -30,7 +30,7 @@
                         <!-- Input Nama Pembayaran -->
                         <div class="form-group mb-3">
                             <label class="font-weight-bold">Nama Pembayaran</label>
-                            <input type="text" name="payment_name" class="form-control @error('payment_name') is-invalid @enderror" value="{{ old('payment_name') }}" placeholder="Masukkan Nama Pembayaran">
+                            <input type="text" name="nama_pembayaran" class="form-control @error('payment_name') is-invalid @enderror" value="{{ old('payment_name') }}" placeholder="Masukkan Nama Pembayaran">
                             @error('payment_name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -41,7 +41,7 @@
                         <!-- Input Nomor Pembayaran -->
                         <div class="form-group mb-3">
                             <label class="font-weight-bold">Nomor Pembayaran</label>
-                            <input type="text" name="payment_number" class="form-control @error('payment_number') is-invalid @enderror" value="{{ old('payment_number') }}" placeholder="Masukkan Nomor Pembayaran">
+                            <input type="text" name="nomor_pembayaran" class="form-control @error('payment_number') is-invalid @enderror" value="{{ old('payment_number') }}" placeholder="Masukkan Nomor Pembayaran">
                             @error('payment_number')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -51,9 +51,9 @@
 
                         <!-- Upload Gambar Pembayaran -->
                         <div class="form-group mb-3">
-                            <label for="payment_receipt" class="font-weight-bold">Upload Logo Pembayaran</label>
-                            <input type="file" class="form-control @error('payment_receipt') is-invalid @enderror" id="payment_receipt" name="payment_receipt">
-                            @error('payment_receipt')
+                            <label for="gambar_pembayaran" class="font-weight-bold">Upload Logo Pembayaran</label>
+                            <input type="file" class="form-control @error('gambar_pembayaran') is-invalid @enderror" id="gambar_pembayaran" name="gambar_pembayaran">
+                            @error('gambar_pembayaran')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
