@@ -125,12 +125,34 @@ class JalurController extends Controller
     {
         $jalur = JalurWeb::findOrFail($id);
 
+        // Hapus data terkait di tabel pesanan
+        $jalur->pesanan()->delete(); // Asumsikan ada relasi hasMany ke tabel pesanan
+
+        // Hapus gambar jika ada
         if ($jalur->gambar_jalur) {
             Storage::disk('public')->delete('images/' . $jalur->gambar_jalur);
         }
 
+        // Hapus jalur
         $jalur->delete();
 
         return redirect()->route('jalur.index')->with('success', 'Jalur berhasil dihapus!');
     }
+
+    public function edit($id)
+    {
+        // Ambil data jalur berdasarkan ID
+        $jalur = JalurWeb::findOrFail($id);
+        
+        // Ambil data untuk dropdown
+        $pegunungan = GunungWeb::all();
+        $provinces = ProvinceWeb::all();
+        $regencies = RegencyWeb::where('province_id', $jalur->province_id)->get();
+        $districts = DistrictWeb::where('regency_id', $jalur->regency_id)->get();
+        $villages = VillageWeb::where('district_id', $jalur->district_id)->get();
+
+        // Kembalikan view edit dengan data yang diperlukan
+        return view('jalur.edit', compact('jalur', 'pegunungan', 'provinces', 'regencies', 'districts', 'villages'));
+    }
+
 }
