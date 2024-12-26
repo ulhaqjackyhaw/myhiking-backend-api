@@ -14,7 +14,7 @@
             <!-- Form Pencarian -->
             <form action="{{ route('users.index') }}" method="GET" class="d-flex">
                 <input type="text" name="search" class="form-control" placeholder="Cari pengguna..." value="{{ request()->get('search') }}">
-                <button type="submit" class="btn btn-primary ms-2" style="background-color: #007bff; border: none;">Cari</button>
+                <button type="submit" class="btn btn-primary ms-2" style="background-color:  #117958; border: none;">Cari</button>
             </form>
         </div>
 

@@ -62,7 +62,7 @@ class PesananWeb extends Model
     // Relasi Pesanan ke User (Pemesan)
     public function user()
     {
-        return $this->belongsTo(UserWeb::class, 'id_users', 'id', 'name');
+        return $this->belongsTo(UserWeb::class, 'id_user', 'id', 'name');
     }
     /**
      * Mendapatkan status pesanan dengan label yang lebih mudah dimengerti

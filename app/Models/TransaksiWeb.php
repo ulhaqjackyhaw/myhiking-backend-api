@@ -60,5 +60,9 @@ public function getBuktiUrlAttribute()
     // Jika tidak ada bukti, kembalikan URL gambar default atau null
     return asset('images/no-image.png'); // Gambar default jika bukti tidak ditemukan
 }
-
+public function payment()
+{
+    return $this->belongsTo(Payment::class, 'payment_id');
 }
+}
+

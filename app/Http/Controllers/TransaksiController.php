@@ -9,23 +9,28 @@ use Illuminate\Http\Request;
 class TransaksiController extends Controller
 {
     public function index(Request $request)
-    {
-        $search = $request->get('search');
-        $transaksis = TransaksiWeb::query()
-            ->when($search, function ($query, $search) {
-                return $query->where('id_pesanan', 'LIKE', "%{$search}%")
-                    ->orWhere('metode_pembayaran', 'LIKE', "%{$search}%")
-                    ->orWhere('status_pesanan', 'LIKE', "%{$search}%");
-            })
-            ->get();
-        return view('transaksi.index', compact('transaksis'));
-    }
+{
+    $search = $request->get('search');
+    $transaksis = TransaksiWeb::query()
+        ->with('payment') // Memuat data relasi payment
+        ->when($search, function ($query, $search) {
+            return $query->where('id_pesanan', 'LIKE', "%{$search}%")
+                ->orWhereHas('payment', function ($q) use ($search) {
+                    $q->where('nama_pembayaran', 'LIKE', "%{$search}%");
+                })
+                ->orWhere('status_pesanan', 'LIKE', "%{$search}%");
+        })
+        ->get();
+
+    return view('transaksi.index', compact('transaksis'));
+}
 
     public function show($id)
     {
-        $transaksi = TransaksiWeb::findOrFail($id);
+        $transaksi = TransaksiWeb::with('payment')->findOrFail($id); // Memuat relasi payment
         return view('transaksi.show', compact('transaksi'));
     }
+
     public function verify($id)
     {
         $transaksi = TransaksiWeb::findOrFail($id);

@@ -10,13 +10,16 @@
                     <h1 class="text-center my-4" style="font-weight: bold; color: black;">Daftar Gunung</h1> <!-- Gaya font disamakan -->
                     <!-- Baris untuk tombol "Tambah Gunung" dan form pencarian -->
                     <div class="d-flex justify-content-between mb-3">
-                        <a href="{{ route('gunung.create') }}" class="btn"
-                           style="background-color: #117958; color: white; border: none;">Tambah Gunung</a> <!-- Gaya tombol disamakan -->
+                    <a href="{{ route('gunung.create') }}" class="btn" style="background-color: #FFA500; color: white; border: none;">
+                        <i class="fas fa-plus"></i> Tambah Gunung
+                    </a>
+
                         <!-- Form Pencarian -->
                         <form action="{{ route('gunung.index') }}" method="GET" class="d-flex">
-                            <input type="text" name="search" class="form-control" placeholder="Cari gunung..." value="{{ request()->get('search') }}">
-                            <button type="submit" class="btn btn-primary ms-2" style="background-color: #007bff; border: none;">Cari</button>
+                            <input type="text" name="search" class="form-control me-2" placeholder="Cari gunung..." value="{{ request()->get('search') }}">
+                            <button type="submit" class="btn btn-success" style="background-color: #117958; border: none;">Cari</button>
                         </form>
+
                     </div>
                     @if (session('success'))
                         <div class="alert alert-success">{{ session('success') }}</div>

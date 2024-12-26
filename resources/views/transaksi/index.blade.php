@@ -13,7 +13,7 @@
             <!-- Form Pencarian -->
             <form action="{{ route('transaksi.index') }}" method="GET" class="d-flex">
                 <input type="text" name="search" class="form-control" placeholder="Cari transaksi..." value="{{ request()->get('search') }}">
-                <button type="submit" class="btn btn-primary ms-2" style="background-color: #007bff; border: none;">Cari</button>
+                <button type="submit" class="btn btn-primary ms-2" style="background-color:  #117958; border: none;">Cari</button>
             </form>
         </div>
         @if (session('success'))
@@ -31,36 +31,33 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($transaksis as $transaksi)
-                <tr>
-                    <td class="text-center">{{ $transaksi->id }}</td>
-                    <td class="text-center">{{ $transaksi->id_pesanan }}</td>
-                    <td class="text-center">{{ $transaksi->metode_pembayaran }}</td>
-                    <td class="text-center">{{ number_format($transaksi->total_bayar, 0, ',', '.') }}</td>
-                    <td class="text-center">
-                        <!-- Status Pesanan -->
-                        @if ($transaksi->status_pesanan === 'Unverified')
-                            <span class="text-danger">Unverified</span>
-                        @else
-                            <span class="text-success">Verified</span>
-                        @endif
-                    </td>
-                    <td class="text-center">
-                        <!-- Tombol Detail -->
-                        <a href="{{ route('transaksi.show', $transaksi->id) }}" class="btn btn-sm btn-dark">LIHAT DETAIL</a>
-                        
-                        <!-- Tombol Verifikasi -->
-                        @if ($transaksi->status_pesanan === 'Unverified') <!-- Menampilkan tombol verifikasi jika status 'unverified' -->
-                            <form action="{{ route('transaksi.verify', $transaksi->id) }}" method="POST" class="d-inline">
-                                @csrf
-                                <button type="submit" class="btn btn-sm" style="background-color: #117958; color: white; border: none;">VERIFIKASI</button>
-
-                            </form>
-                        @endif
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
+    @foreach ($transaksis as $transaksi)
+    <tr>
+        <td class="text-center">{{ $transaksi->id }}</td>
+        <td class="text-center">{{ $transaksi->id_pesanan }}</td>
+       
+        <td class="text-center">{{ $transaksi->payment->nama_pembayaran ?? 'Metode tidak ditemukan' }}</td>
+        <td class="text-center">{{ number_format($transaksi->total_bayar, 0, ',', '.') }}</td>
+        <td class="text-center">
+            @if ($transaksi->status_pesanan === 'Unverified')
+                <span class="text-danger">Unverified</span>
+            @else
+                <span class="text-success">Verified</span>
+            @endif
+        </td>
+        <td class="text-center">
+            <a href="{{ route('transaksi.show', $transaksi->id) }}" class="btn btn-sm btn-dark">DETAIL</a>
+            
+            @if ($transaksi->status_pesanan === 'Unverified')
+                <form action="{{ route('transaksi.verify', $transaksi->id) }}" method="POST" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-sm" style="background-color: #117958; color: white; border: none;">VERIFIKASI</button>
+                </form>
+            @endif
+        </td>
+    </tr>
+    @endforeach
+</tbody>
         </table>
     </div>
 </body>

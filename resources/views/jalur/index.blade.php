@@ -9,19 +9,16 @@
     <div class="container-fluid bg-white p-4 rounded">
         <h1 class="text-center my-4" style="font-weight: bold; color: black;">Daftar Jalur</h1>
         <!-- Baris untuk tombol "Tambah Jalur" dan form pencarian -->
-        <div class="row mb-3">
-            <div class="col-md-6 mb-2">
-                <a href="{{ route('jalur.create') }}" class="btn w-100"
-                   style="background-color: #117958; color: white; border: none;">Tambah Jalur</a>
-            </div>
-            <div class="col-md-6">
-                <!-- Form Pencarian -->
-                <form action="{{ route('jalur.index') }}" method="GET" class="d-flex">
-                    <input type="text" name="search" class="form-control me-2" placeholder="Cari jalur..."
-                           value="{{ request()->get('search') }}">
-                    <button type="submit" class="btn" style="background-color: #007bff; color: white;">Cari</button>
-                </form>
-            </div>
+        <div class="d-flex justify-content-between mb-3">
+        <a href="{{ route('jalur.create') }}" class="btn" style="background-color: #FFA500; color: white; border: none;">
+            <i class="fas fa-plus"></i> Tambah Jalur
+        </a>
+
+            <!-- Form Pencarian -->
+            <form action="{{ route('jalur.index') }}" method="GET" class="d-flex">
+                <input type="text" name="search" class="form-control" placeholder="Cari jalur..." value="{{ request()->get('search') }}">
+                <button type="submit" class="btn btn-primary ms-2" style="background-color:  #117958; border: none;">Cari</button>
+            </form>
         </div>
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
@@ -68,8 +65,7 @@
                         <td>Rp {{ number_format($j->biaya, 0, ',', '.') }}</td>
                         <td class="text-center">
                             <div class="d-flex justify-content-between">
-                                <a href="{{ route('jalur.edit', $j->id) }}" class="btn btn-sm"
-                                   style="background-color: #28a745; color: white; margin-right: 5px;">EDIT</a>
+                                <a href="{{ route('jalur.edit', $j->id) }}" class="btn btn-sm" style="background-color: #28a745; color: white; margin-right: 5px;">EDIT</a>
                                 <form onsubmit="return confirm('Yakin ingin menghapus jalur ini?');" action="{{ route('jalur.destroy', $j->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
@@ -83,5 +79,10 @@
             </table>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="text-center mt-4" style="color: white;">
+        <p>Maintenance by <strong>MyHiking</strong></p>
+    </footer>
 </body>
 @endsection

@@ -81,12 +81,13 @@
                 </a>
             </li>
 
-            <li class="nav-item">
+             <!-- Nav Item - Tata Tertib -->
+             <li class="nav-item {{ request()->routeIs('tata_tertib.index') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('tata_tertib.index') }}">
-                    <i class="fas fa-book"></i> Tata Tertib
+                    <i class="fas fa-book"></i> <!-- Pastikan ikon sesuai -->
+                    <span>{{ __('Tata Tertib') }}</span>
                 </a>
             </li>
-
 
             <!-- Nav Item - Transaksi -->
             <li class="nav-item {{ request()->routeIs('transaksi.index') ? 'active' : '' }}">
