@@ -9,7 +9,7 @@ use App\Http\Controllers\Api\JalurController;
 use App\Http\Controllers\Api\PesananController;
 use App\Http\Controllers\Api\AnggotaPesananController;
 use App\Http\Controllers\Api\TransaksiController;
-use App\Http\Controllers\API\TataTertibController;
+use App\Http\Controllers\Api\TataTertibController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Models\Pesanan;
 
