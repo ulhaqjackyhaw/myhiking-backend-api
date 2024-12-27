@@ -41,22 +41,22 @@
                     <td class="text-center">{{ $transaksi->payment->nama_pembayaran ?? 'Metode tidak ditemukan' }}</td>
                     <td class="text-center">{{ number_format($transaksi->total_bayar, 0, ',', '.') }}</td>
                     <td class="text-center">
-                        @if ($transaksi->status_pesanan === 'Verified')
-                            <span class="text-success">Verified</span>
-                        @elseif ($transaksi->status_pesanan === 'Unverified')
+                        @if ($transaksi->status_pesanan === 'Unverified')
                             <span class="text-danger">Unverified</span>
-                        @else
+                        @elseif ($transaksi->status_pesanan === 'Verified')
+                            <span class="text-success">Verified</span>
+                        @elseif ($transaksi->status_pesanan === 'Incomplete')
                             <span class="text-warning">Incomplete</span>
                         @endif
                     </td>
+
                     <td class="text-center">
                         <a href="{{ route('transaksi.show', $transaksi->id) }}" class="btn btn-sm btn-dark">DETAIL</a>
                         
                         <!-- Tombol Verifikasi -->
-                        @if ($transaksi->status_pesanan === 'Unverified')
+                        @if ($transaksi->status_pesanan === 'Unverified') <!-- Menampilkan tombol verifikasi jika status 'unverified' -->
                             <form action="{{ route('transaksi.verify', $transaksi->id) }}" method="POST" class="d-inline">
                                 @csrf
-                                @method('PATCH') <!-- Gunakan method spoofing -->
                                 <button type="submit" class="btn btn-sm" style="background-color: #117958; color: white; border: none;">VERIFIKASI</button>
                             </form>
                         @endif

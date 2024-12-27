@@ -76,12 +76,14 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
 Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
 // Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
-Route::patch('/transaksi/{id}/verify', [TransaksiController::class, 'verify'])->name('transaksi.verify');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
     Route::get('/riwayat/{id}', [RiwayatController::class, 'show'])->name('riwayat.show');
     Route::put('/riwayat/{id}/update-status', [RiwayatController::class, 'updateStatus'])->name('riwayat.updateStatus');
+    Route::patch('/transaksi/{id}/verify', [TransaksiController::class, 'verify'])->name('transaksi.verify');
+    Route::post('/transaksi/{id}/unverify', [TransaksiController::class, 'unverify'])->name('transaksi.unverify');
 });
 
 

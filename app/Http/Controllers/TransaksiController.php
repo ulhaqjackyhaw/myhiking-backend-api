@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TransaksiWeb;
-use App\Http\Requests\TransaksiRequest; // Import Form Request
+use App\Models\PesananWeb; 
 use Illuminate\Http\Request;
 
 class TransaksiController extends Controller
@@ -29,78 +29,97 @@ class TransaksiController extends Controller
     // Menampilkan detail transaksi
     public function show($id)
     {
-        $transaksi = TransaksiWeb::with('payment')->findOrFail($id); // Memuat relasi payment
+        $transaksi = TransaksiWeb::with('payment')->findOrFail($id);
         return view('transaksi.show', compact('transaksi'));
     }
 
     // Memverifikasi transaksi
     public function verify($id)
-    {
-        $transaksi = TransaksiWeb::findOrFail($id);
+        {
+            $transaksi = TransaksiWeb::findOrFail($id);
+            
+            // Periksa apakah status pesanan adalah 'unverified'
+            if ($transaksi->status_pesanan === 'Unverified') {
+                $transaksi->status_pesanan = 'Verified';  // Ubah status menjadi 'verified'
+                $transaksi->save();
+            }
 
-        // Periksa apakah status pesanan adalah 'unverified'
-        if ($transaksi->status_pesanan === 'Unverified') {
-            $transaksi->status_pesanan = 'Verified';  // Ubah status menjadi 'verified'
-            $transaksi->save();
+            return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil diverifikasi');
         }
 
-        return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil diverifikasi');
+        public function store(Request $request)
+    {
+        // Validasi data input
+        $validatedData = $request->validate([
+            'id_pesanan' => 'required|exists:pesanan,id',
+            'payment_id' => 'required|exists:payments,id',
+            'total_bayar' => 'required|integer',
+            'waktu_pembayaran' => 'nullable|date',
+            'bukti' => 'nullable|string',
+        ]);
+
+        // Tentukan status berdasarkan kondisi
+        $status = 'Incomplete'; // Default status
+        if (
+            !empty($validatedData['bukti']) &&
+            !empty($validatedData['waktu_pembayaran']) &&
+            !empty($validatedData['total_bayar'])
+        ) {
+            $status = 'Verified';
+        }
+
+        // Simpan transaksi
+        $transaksi = TransaksiWeb::create([
+            'id_pesanan' => $validatedData['id_pesanan'],
+            'payment_id' => $validatedData['payment_id'],
+            'total_bayar' => $validatedData['total_bayar'],
+            'waktu_pembayaran' => $validatedData['waktu_pembayaran'],
+            'bukti' => $validatedData['bukti'],
+            'status_pesanan' => $status,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Transaksi berhasil dibuat',
+            'data' => $transaksi,
+        ], 201);
     }
 
-    // Menambah transaksi baru
-    public function store(Request $request)
-{
-    $validatedData = $request->validate([
-        'id_pesanan' => 'required|exists:pesanan,id',
-        'payment_id' => 'required|exists:payments,id',
-        'total_bayar' => 'required|integer',
-        'waktu_pembayaran' => 'nullable|date',
-        'bukti' => 'nullable|image|max:2048',
-    ]);
+    public function update(Request $request, $id)
+    {
+        // Temukan transaksi
+        $transaksi = TransaksiWeb::findOrFail($id);
 
-    // Simpan bukti pembayaran ke storage jika ada
-    if ($request->hasFile('bukti')) {
-        $validatedData['bukti'] = $request->file('bukti')->store('bukti-pembayaran', 'public');
+        // Validasi data input
+        $validatedData = $request->validate([
+            'id_pesanan' => 'nullable|exists:pesanan,id',
+            'payment_id' => 'nullable|exists:payments,id',
+            'total_bayar' => 'nullable|integer',
+            'waktu_pembayaran' => 'nullable|date',
+            'bukti' => 'nullable|string',
+        ]);
+
+        // Update data transaksi
+        $transaksi->update($validatedData);
+
+        // Tentukan status berdasarkan kondisi
+        if (
+            !empty($transaksi->bukti) &&
+            !empty($transaksi->waktu_pembayaran) &&
+            !empty($transaksi->total_bayar)
+        ) {
+            $transaksi->status_pesanan = 'Verified';
+        } else {
+            $transaksi->status_pesanan = 'Incomplete';
+        }
+
+        $transaksi->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Transaksi berhasil diperbarui',
+            'data' => $transaksi,
+        ], 200);
     }
 
-    // Tentukan status berdasarkan kondisi
-    if (!empty($validatedData['bukti']) && !empty($validatedData['waktu_pembayaran'])) {
-        $validatedData['status_pesanan'] = 'Unverified';
-    } else {
-        $validatedData['status_pesanan'] = 'Incomplete';
-    }
-
-    TransaksiWeb::create($validatedData);
-
-    return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil ditambahkan.');
-}
-
-public function update(Request $request, $id)
-{
-    $transaksi = TransaksiWeb::findOrFail($id);
-
-    $validatedData = $request->validate([
-        'id_pesanan' => 'required|exists:pesanan,id',
-        'payment_id' => 'required|exists:payments,id',
-        'total_bayar' => 'required|integer',
-        'waktu_pembayaran' => 'nullable|date',
-        'bukti' => 'nullable|image|max:2048',
-    ]);
-
-    // Simpan bukti pembayaran ke storage jika ada
-    if ($request->hasFile('bukti')) {
-        $validatedData['bukti'] = $request->file('bukti')->store('bukti-pembayaran', 'public');
-    }
-
-    // Tentukan status berdasarkan kondisi
-    if (!empty($validatedData['bukti']) && !empty($validatedData['waktu_pembayaran'])) {
-        $validatedData['status_pesanan'] = 'Unverified';
-    } else {
-        $validatedData['status_pesanan'] = 'Incomplete';
-    }
-
-    $transaksi->update($validatedData);
-
-    return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil diperbarui.');
-}
 }

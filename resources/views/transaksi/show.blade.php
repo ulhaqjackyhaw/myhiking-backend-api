@@ -33,6 +33,7 @@
                     @endif
                 </td>
             </tr>
+
             <tr>
                 <th>Waktu Pembayaran</th>
                 <td>{{ $transaksi->waktu_pembayaran ? \Carbon\Carbon::parse($transaksi->waktu_pembayaran)->format('d-m-Y H:i:s') : 'Belum dibayar' }}</td>
