@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TransaksiWeb;
-use App\Models\PesananWeb; 
+use App\Models\PesananWeb;
 use Illuminate\Http\Request;
 
 class TransaksiController extends Controller
@@ -35,19 +35,27 @@ class TransaksiController extends Controller
 
     // Memverifikasi transaksi
     public function verify($id)
-        {
-            $transaksi = TransaksiWeb::findOrFail($id);
-            
-            // Periksa apakah status pesanan adalah 'unverified'
-            if ($transaksi->status_pesanan === 'Unverified') {
-                $transaksi->status_pesanan = 'Verified';  // Ubah status menjadi 'verified'
-                $transaksi->save();
-            }
+    {
+        // Temukan transaksi berdasarkan ID
+        $transaksi = TransaksiWeb::findOrFail($id);
 
+        // Periksa apakah status pesanan adalah 'Unverified'
+        if ($transaksi->status_pesanan === 'Unverified') {
+            // Ubah status menjadi 'Verified'
+            $transaksi->status_pesanan = 'Verified';
+
+            // Simpan perubahan ke database
+            $transaksi->save();
+
+            // Redirect dengan pesan sukses
             return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil diverifikasi');
         }
 
-        public function store(Request $request)
+        // Jika status tidak 'Unverified', beri pesan error
+        return redirect()->route('transaksi.index')->with('error', 'Transaksi tidak dapat diverifikasi');
+    }
+
+    public function store(Request $request)
     {
         // Validasi data input
         $validatedData = $request->validate([
@@ -58,14 +66,10 @@ class TransaksiController extends Controller
             'bukti' => 'nullable|string',
         ]);
 
-        // Tentukan status berdasarkan kondisi
+        // Tentukan status berdasarkan kondisi baru
         $status = 'Incomplete'; // Default status
-        if (
-            !empty($validatedData['bukti']) &&
-            !empty($validatedData['waktu_pembayaran']) &&
-            !empty($validatedData['total_bayar'])
-        ) {
-            $status = 'Verified';
+        if (!empty($validatedData['bukti']) && !empty($validatedData['waktu_pembayaran'])) {
+            $status = 'Unverified';
         }
 
         // Simpan transaksi
@@ -102,16 +106,14 @@ class TransaksiController extends Controller
         // Update data transaksi
         $transaksi->update($validatedData);
 
-        // Tentukan status berdasarkan kondisi
-        if (
-            !empty($transaksi->bukti) &&
-            !empty($transaksi->waktu_pembayaran) &&
-            !empty($transaksi->total_bayar)
-        ) {
-            $transaksi->status_pesanan = 'Verified';
-        } else {
+        // Tentukan status berdasarkan kondisi baru
+        if (empty($transaksi->bukti) || empty($transaksi->waktu_pembayaran)) {
             $transaksi->status_pesanan = 'Incomplete';
+        } else if ($transaksi->status_pesanan != 'Verified') {
+            // Hanya ubah ke Unverified jika status bukan Verified
+            $transaksi->status_pesanan = 'Unverified';
         }
+        // Jika status sudah Verified, biarkan tetap Verified
 
         $transaksi->save();
 
