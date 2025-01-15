@@ -28,17 +28,22 @@
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                                     <div class="form-group">
-                                        <input type="email" class="form-control form-control-user" name="email" placeholder="{{ __('E-Mail Address') }}" value="{{ old('email') }}" required autofocus>
+                                        <input type="email" class="form-control form-control-user" name="email"
+                                            placeholder="{{ __('E-Mail Address') }}" value="{{ old('email') }}" required
+                                            autofocus>
                                     </div>
 
                                     <div class="form-group">
-                                        <input type="password" class="form-control form-control-user" name="password" placeholder="{{ __('Password') }}" required>
+                                        <input type="password" class="form-control form-control-user" name="password"
+                                            placeholder="{{ __('Password') }}" required>
                                     </div>
 
                                     <div class="form-group">
                                         <div class="custom-control custom-checkbox small">
-                                            <input type="checkbox" class="custom-control-input" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                            <label class="custom-control-label" for="remember">{{ __('Remember Me') }}</label>
+                                            <input type="checkbox" class="custom-control-input" name="remember"
+                                                id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                            <label class="custom-control-label"
+                                                for="remember">{{ __('Remember Me') }}</label>
                                         </div>
                                     </div>
 
@@ -67,23 +72,23 @@
                                             <i class="fab fa-facebook-f fa-fw"></i> {{ __('Login with Facebook') }}
                                         </button>
                                     </div> -->
-                                <!-- </form> -->
+                                    <!-- </form> -->
 
-                                <!-- <hr> -->
+                                    <!-- <hr> -->
 
-                                @if (Route::has('password.request'))
-                                    <div class="text-center">
-                                        <a class="small" href="{{ route('password.request') }}">
-                                            {{ __('Forgot Password?') }}
-                                        </a>
-                                    </div>
-                                @endif
+                                    @if (Route::has('password.request'))
+                                        <div class="text-center">
+                                            <a class="small" href="{{ route('password.request') }}">
+                                                {{ __('Forgot Password?') }}
+                                            </a>
+                                        </div>
+                                    @endif
 
-                                @if (Route::has('register'))
+                                    <!-- @if (Route::has('register'))
                                     <div class="text-center">
                                         <a class="small" href="{{ route('register') }}">{{ __('Create an Account!') }}</a>
                                     </div>
-                                @endif
+                                @endif -->
                             </div>
                         </div>
                     </div>
