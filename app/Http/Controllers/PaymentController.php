@@ -9,13 +9,13 @@ class PaymentController extends Controller
 {
     // Menampilkan daftar pembayaran
     public function index()
-{
-    // Gunakan paginate untuk membatasi jumlah data per halaman (misalnya 10 per halaman)
-    $payments = Payment::paginate(10);
+    {
+        // Gunakan paginate untuk membatasi jumlah data per halaman (misalnya 10 per halaman)
+        $payments = Payment::paginate(10);
 
-    // Kirim data pembayaran yang sudah dipaginasi ke view
-    return view('payments.index', compact('payments'));
-}
+        // Kirim data pembayaran yang sudah dipaginasi ke view
+        return view('payments.index', compact('payments'));
+    }
 
     // Menampilkan form untuk menambah pembayaran baru
     public function create()
@@ -92,5 +92,22 @@ class PaymentController extends Controller
 
         // Redirect ke halaman daftar pembayaran
         return redirect()->route('payments.index')->with('success', 'Pembayaran berhasil diupdate.');
+    }
+    // Menghapus data pembayaran
+    public function destroy($id)
+    {
+        // Cari data pembayaran yang akan dihapus
+        $payment = Payment::findOrFail($id);
+
+        // Hapus gambar dari storage jika ada
+        if ($payment->gambar_pembayaran) {
+            \Storage::delete('public/' . $payment->gambar_pembayaran);
+        }
+
+        // Hapus data dari database
+        $payment->delete();
+
+        // Redirect ke halaman daftar pembayaran dengan pesan sukses
+        return redirect()->route('payments.index')->with('success', 'Pembayaran berhasil dihapus.');
     }
 }

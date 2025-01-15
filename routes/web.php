@@ -32,23 +32,26 @@ Auth::routes();
 // Route::get('/', [HomeController::class, 'index']);
 // Auth::routes();
 // Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::controller(HomeController::class)->group(function () {
-    Route::get('/', 'index');
-    Route::get('/home', 'index')->name('home');
+// Route::controller(HomeController::class)->group(function () {
+//     Route::get('/', 'index');
+//     Route::get('/home', 'index')->name('home');
+// });
+Route::middleware(['auth', 'level3'])->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
 });
 
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
-
 Route::get('/about', function () {
     return view('about');
 })->name('about');
 
 // Rute untuk daftar gunung
 Route::get('/gunung', [GunungController::class, 'index'])->name('gunung');
-
+// Rute untuk menampilkan form create gunung
+Route::get('/gunung/create', [GunungController::class, 'create'])->name('gunung.create');
 // Resource route tanpa index
-Route::resource('gunung', GunungController::class)->except(['index']);
+Route::resource('gunung', GunungController::class)->except(['create', 'index']);
 Route::resource('gunung', GunungController::class);
 Route::resource('jalur', JalurController::class);
 Route::resource('tata_tertib', TataTertibController::class);
@@ -91,6 +94,12 @@ Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index
 Route::get('/riwayat/{id}', [RiwayatController::class, 'show'])->name('riwayat.show');
 Route::post('/riwayat/scan', [RiwayatController::class, 'scan'])->name('riwayat.scan');
 Route::post('/riwayat/{id}/update-status', [RiwayatController::class, 'updateStatus'])->name('riwayat.updateStatus');
-Route::resource('payments', PaymentController::class);
 
-
+Route::middleware(['auth'])->group(function () {
+    Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
+    Route::get('/payments/create', [PaymentController::class, 'create'])->name('payments.create');
+    Route::post('/payments', [PaymentController::class, 'store'])->name('payments.store');
+    Route::get('/payments/{id}/edit', [PaymentController::class, 'edit'])->name('payments.edit');
+    Route::put('/payments/{id}', [PaymentController::class, 'update'])->name('payments.update');
+    Route::delete('/payments/{id}', [PaymentController::class, 'destroy'])->name('payments.destroy');
+});

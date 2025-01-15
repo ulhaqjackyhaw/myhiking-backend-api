@@ -14,6 +14,9 @@ class GunungController extends Controller
 {
     public function index(Request $request)
     {
+        if (auth()->user()->level !== 3) {
+            abort(403, 'Unauthorized');
+        }
         $search = $request->input('search');
 
         $gunungs = GunungWeb::with(['province', 'regency', 'district', 'village'])

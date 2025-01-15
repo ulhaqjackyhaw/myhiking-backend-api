@@ -40,15 +40,24 @@
             <th>Foto Profil</th>
             <td class="text-center">
                 @if ($user->profile_picture)
-                <img src="{{ asset('/storage/'.$user->profile_picture) }}" alt="Foto Profil" class="img-fluid" style="max-width: 300px; border-radius: 5px;">
+                    <img src="{{ asset('/storage/' . $user->profile_picture) }}" alt="Foto Profil" class="img-fluid"
+                        style="max-width: 300px; border-radius: 5px;">
                 @else
-                <p class="text-danger">Tidak ada foto profil.</p>
+                    <p class="text-danger">Tidak ada foto profil.</p>
                 @endif
             </td>
         </tr>
     </table>
     <div class="d-flex justify-content-center mt-4">
-        <a href="{{ route('users.index') }}" class="btn btn-primary" style="background-color: #117958; border: none;">Kembali ke Daftar Pengguna</a>
+        <a href="{{ route('users.index') }}" class="btn btn-primary"
+            style="background-color: #117958; border: none;">Kembali ke Daftar Pengguna</a>
+        <!-- Delete button -->
+        <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger"
+                onclick="return confirm('Apakah Anda yakin ingin menghapus pengguna ini?')">Hapus</button>
+        </form>
     </div>
 </div>
 @endsection
