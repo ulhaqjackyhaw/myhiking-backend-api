@@ -1,66 +1,81 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# MyHiking Backend API & Web Admin
 
-## About Laravel
+> Backend API dan Web Admin untuk aplikasi pendakian gunung (MyHiking). Dibangun menggunakan Laravel.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Fitur Utama
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **RESTful API** untuk aplikasi mobile/klien eksternal
+- **Web Admin** untuk pengelolaan data gunung, jalur, pesanan, anggota, pembayaran, dan user
+- Manajemen user, otorisasi, dan autentikasi
+- Pengelolaan data wilayah (provinsi, kabupaten, kecamatan, desa)
+- Manajemen transaksi dan pembayaran
+- Laporan dan monitoring aktivitas pendakian
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Struktur Project
 
-## Learning Laravel
+- `app/Models/` : Model data utama (Gunung, Jalur, Pesanan, User, dsb)
+- `app/Http/Controllers/` : Controller untuk API & Web Admin
+- `routes/api.php` : Routing endpoint API
+- `routes/web.php` : Routing halaman web admin
+- `resources/views/` : Blade template untuk web admin
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Instalasi & Setup
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+1. **Clone repository**
+   ```bash
+   git clone <repo-url>
+   cd myhiking-backend-api
+   ```
+2. **Install dependency**
+   ```bash
+   composer install
+   npm install && npm run build
+   ```
+3. **Copy file environment**
+   ```bash
+   cp .env.example .env
+   ```
+4. **Generate key**
+   ```bash
+   php artisan key:generate
+   ```
+5. **Migrasi & seeder database**
+   ```bash
+   php artisan migrate --seed
+   ```
+6. **Jalankan server**
+   ```bash
+   php artisan serve
+   ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Dokumentasi API
 
-## Laravel Sponsors
+Endpoint API tersedia di `routes/api.php`. Contoh endpoint:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- `GET /api/gunung` — Daftar gunung
+- `POST /api/pesanan` — Membuat pesanan pendakian
+- `GET /api/user` — Data user
 
-### Premium Partners
+Gunakan tools seperti Postman untuk eksplorasi endpoint.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
 
-## Contributing
+## Web Admin
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Web admin dapat diakses melalui browser pada route yang telah disediakan di `routes/web.php`. Fitur utama:
 
-## Code of Conduct
+- Manajemen data gunung, jalur, pesanan, anggota
+- Monitoring transaksi dan laporan
+- Manajemen user dan admin
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Demo Web Admin
 
-## Security Vulnerabilities
+[Lihat demo di YouTube](https://youtu.be/cbiylzg3crQ)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Kontribusi
 
-## License
+Pull request dan issue sangat terbuka untuk pengembangan lebih lanjut.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Lisensi
+
+Project ini menggunakan lisensi [MIT](https://opensource.org/licenses/MIT).
